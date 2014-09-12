@@ -2,7 +2,8 @@
 	"{{repeat(5, 7)}}",
 	{
 		"bool": "{{boolean()}}",
-		"int": "{{number(100, 999)}}",
-		"str": "{{string(20)}}"
+		"int": "{{number(100, 999, 10)}}",
+		"str": "{{string(20, 100)}}",
+		"printable": "{{string(0, 10, 'printable')}}"
 	}
 ]
