@@ -4,6 +4,9 @@
 		"bool": "{{boolean()}}",
 		"int": "{{number(100, 999, 10)}}",
 		"str": "{{string(20, 100)}}",
-		"printable": "{{string(0, 10, 'printable')}}"
+		"printable": "{{string(0, 10, 'printable')}}",
+		"utf8": "{{string(0, 300, 'utf8')}}",
+		"utf8_2": "{{string(10, 100, 'utf8_2')}}",
+		"utf8_12": "{{string(10, 100, 'utf8_12')}}"
 	}
 ]
