@@ -17,8 +17,7 @@ $conf = new Conf($confFile);
 
 if ($argc > 1 && strpos($argv[1], 'g') === 0) {
 	$gen = new Generator($conf);
-	echo 'te';
-	$gen->run();
+	$gen->generate();
 } else {
 	$bench = new Bench($conf);
 	$bench->run();
