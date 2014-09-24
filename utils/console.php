@@ -13,7 +13,7 @@ $templateDir = __DIR__ . "/../templates/";
 $confDir = __DIR__ . "/../conf/";
 $confFile = $confDir . "bench.json";
 
-$conf = new Conf($confFile);
+$conf = new Conf($confFile, $templateDir);
 
 if ($argc > 1 && strpos($argv[1], 'g') === 0) {
 	$gen = new Generator($conf);
