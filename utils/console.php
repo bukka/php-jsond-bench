@@ -10,10 +10,11 @@ use Json\Bench\Bench;
 use Json\Bench\Generator;
 
 $templateDir = __DIR__ . "/../templates/";
+$outputDir = __DIR__ . "/../output/";
 $confDir = __DIR__ . "/../conf/";
 $confFile = $confDir . "bench.json";
 
-$conf = new Conf($confFile, $templateDir);
+$conf = new Conf($confFile, $templateDir, $outputDir);
 
 if ($argc > 1 && strpos($argv[1], 'g') === 0) {
 	$gen = new Generator($conf);

@@ -21,13 +21,21 @@ class Conf
 	protected $templateDir;
 
 	/**
+	 * Output directory
+	 *
+	 * @var string
+	 */
+	protected $outputDir;
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $confFile
 	 */
-	public function __construct($confFile, $templateDir) {
+	public function __construct($confFile, $templateDir, $outputDir) {
 		$this->conf = json_decode(file_get_contents($confFile));
 		$this->templateDir = $templateDir;
+		$this->outputDir = $outputDir;
 	}
 
 	/**
@@ -43,6 +51,8 @@ class Conf
 				return $this->getSizes();
 			case 'td':
 				return $this->templateDir;
+			case 'od':
+				return $this->outputDir;
 		}
 		return null;
 	}
@@ -63,5 +73,14 @@ class Conf
 	 */
 	public function getTemplateDir() {
 		return $this->templateDir;
+	}
+
+	/**
+	 * Get template directory
+	 *
+	 * @return string
+	 */
+	public function getOutputDir() {
+		return $this->outputDir;
 	}
 }
