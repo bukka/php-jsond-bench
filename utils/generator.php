@@ -15,7 +15,7 @@ class Generator
 	 * @var \Json\Bench\Conf 
 	 */
 	protected $conf;
-	
+
 	/**
 	 * Constructor
 	 * 
@@ -24,7 +24,7 @@ class Generator
 	public function __construct(Conf $conf) {
 		$this->conf = $conf;
 	}
-	
+
 	/**
 	 * Generate templates
 	 * - walk template dir
@@ -32,5 +32,14 @@ class Generator
 	 */
 	public function generate() {
 		
+	}
+
+	/**
+	 * Generate instances for path
+	 * @param string $path
+	 * @param int $count
+	 */
+	protected function generateSize($path, $count) {
+
 	}
 }
