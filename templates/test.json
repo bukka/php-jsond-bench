@@ -3,10 +3,12 @@
 	{
 		"bool": "{{boolean()}}",
 		"int": "{{number(100, 999, 10)}}",
-		"str": "{{string(20, 100)}}",
+		"str": "{{string(20, 30)}}",
 		"printable": "{{string(0, 10, 'printable')}}",
-		"utf8": "{{string(0, 300, 'utf8')}}",
-		"utf8_2": "{{string(10, 100, 'utf8_2')}}",
-		"utf8_12": "{{string(10, 100, 'utf8_12')}}"
+		"utf8": "{{string(0, 30, 'utf8')}}",
+		"utf8_2": "{{string(10, 20, 'utf8_2')}}",
+		"utf8_12": "{{string(10, 20, 'utf8_12')}}",
+		"escape": "{{string(10, 100, 'escape')}}",
+		"escape_0_5": "{{string(10, 100, 'escape', 'basic', 0.5)}}"
 	}
 ]
