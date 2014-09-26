@@ -27,19 +27,26 @@ class Generator
 
 	/**
 	 * Generate templates
-	 * - walk template dir
-	 * - create instances (count taken from config) using jsogen)
+	 * - iterate conf sizes
 	 */
 	public function generate() {
-		
+		foreach ($this->conf->getSizes() as $sizeName => $sizeConf) {
+			$input = $this->conf->getTemplateDir() . $sizeName;
+			$output = $this->conf->getOutputDir() . $sizeName;
+			$count = isset($sizeConf['count']) ? $sizeConf['count'] : 1;
+			$this->generateSize($input, $output, $count);
+		}
 	}
 
 	/**
 	 * Generate instances for path
-	 * @param string $path
+	 * - create instances (count taken from config) using jsogen)
+	 *
+	 * @param string $input
+	 * @param string $output
 	 * @param int $count
 	 */
-	protected function generateSize($path, $count) {
+	protected function generateSize($input, $output, $count) {
 
 	}
 }
