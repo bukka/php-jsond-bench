@@ -1,4 +1,5 @@
 {
+	"generator": "jsogen",
 	"sizes": {
 		"huge":   { "count": 1, "loops": 1 },
 		"big":    { "count": 5, "loops": 10 },

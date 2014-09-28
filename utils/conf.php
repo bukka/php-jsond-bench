@@ -7,6 +7,11 @@ namespace Json\Bench;
 class Conf
 {
 	/**
+	 * Default generator executable
+	 */
+	const DEFAULT_GENERATOR = 'jsogen';
+
+	/**
 	 * Config array
 	 *
 	 * @var array
@@ -47,6 +52,8 @@ class Conf
 	 */
 	public function __get($name) {
 		switch ($name) {
+			case 'generator':
+				return $this->getGenerator();
 			case 'sizes':
 				return $this->getSizes();
 			case 'td':
@@ -55,6 +62,15 @@ class Conf
 				return $this->outputDir;
 		}
 		return null;
+	}
+
+	/**
+	 * Get generator executable
+	 *
+	 * @return string
+	 */
+	public function getGenerator() {
+		return isset($this->conf['generator']) ? $this->conf['generator'] : self::DEFAULT_GENERATOR;
 	}
 
 	/**
