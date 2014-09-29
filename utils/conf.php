@@ -38,7 +38,7 @@ class Conf
 	 * @param string $confFile
 	 */
 	public function __construct($confFile, $templateDir, $outputDir) {
-		$this->conf = json_decode(file_get_contents($confFile));
+		$this->conf = json_decode(file_get_contents($confFile), true);
 		$this->templateDir = $templateDir;
 		$this->outputDir = $outputDir;
 	}

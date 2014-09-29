@@ -47,6 +47,19 @@ class Generator
 	 * @param int $count
 	 */
 	protected function generateSize($input, $output, $count) {
-
+		if (is_dir($input)) {
+			if (!is_dir($output) && !mkdir($output)) {
+				throw new Exception("Creating directory failed");
+			}
+			foreach (new \DirectoryIterator($input) as $fileInfo) {
+				if (!$fileInfo->isDot()) {
+					$fname = $fileInfo->getFilename();
+					$this->generateSize("$input/$fname", "$output/$fname", $count);
+				}
+			}
+		} else {
+			$cmd = sprintf("%s %s -o %s -s %d", $this->conf->getGenerator(), $input, $output, $count);
+			echo $cmd . "\n";
+		}
 	}
 }
