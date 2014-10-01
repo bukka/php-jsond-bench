@@ -34,7 +34,8 @@ class Generator
 			$input = $this->conf->getTemplateDir() . $sizeName;
 			$output = $this->conf->getOutputDir() . $sizeName;
 			$count = isset($sizeConf['count']) ? $sizeConf['count'] : 1;
-			$this->generateSize($input, $output, $count);
+			$seed = isset($sizeConf['seed']) ? $sizeConf['seed'] : 1;
+			$this->generateSize($input, $output, $count, $seed);
 		}
 	}
 
@@ -44,9 +45,10 @@ class Generator
 	 *
 	 * @param string $input
 	 * @param string $output
-	 * @param int $count
+	 * @param int    $count
+	 * @param int    $seed
 	 */
-	protected function generateSize($input, $output, $count) {
+	protected function generateSize($input, $output, $count, $seed) {
 		if (is_dir($input)) {
 			if (!is_dir($output) && !mkdir($output)) {
 				throw new Exception("Creating directory failed");
@@ -54,11 +56,11 @@ class Generator
 			foreach (new \DirectoryIterator($input) as $fileInfo) {
 				if (!$fileInfo->isDot()) {
 					$fname = $fileInfo->getFilename();
-					$this->generateSize("$input/$fname", "$output/$fname", $count);
+					$this->generateSize("$input/$fname", "$output/$fname", $count, $seed);
 				}
 			}
 		} else {
-			$cmd = sprintf("%s %s -o %s -s %d", $this->conf->getGenerator(), $input, $output, $count);
+			$cmd = sprintf("%s %s -o %s -s %d", $this->conf->getGenerator(), $input, $output, $seed);
 			echo $cmd . "\n";
 		}
 	}
