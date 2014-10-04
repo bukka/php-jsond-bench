@@ -33,14 +33,36 @@ class Conf
 	protected $outputDir;
 
 	/**
+	 * Action name
+	 *
+	 * @var string
+	 */
+	protected $action;
+
+	/**
+	 * Force flag
+	 *
+	 * @var bool
+	 */
+	protected $force = false;
+
+	/**
+	 * Whitelist of directory paths
+	 *
+	 * @var mixed
+	 */
+	protected $whiteList = false;
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $confFile
 	 */
-	public function __construct($confFile, $templateDir, $outputDir) {
+	public function __construct($argv, $confFile, $templateDir, $outputDir) {
 		$this->conf = json_decode(file_get_contents($confFile), true);
 		$this->templateDir = $templateDir;
 		$this->outputDir = $outputDir;
+		$this->processArguments($argv);
 	}
 
 	/**
@@ -60,6 +82,8 @@ class Conf
 				return $this->templateDir;
 			case 'od':
 				return $this->outputDir;
+			case 'wl':
+				return $this->whiteList;
 		}
 		return null;
 	}
@@ -71,6 +95,15 @@ class Conf
 	 */
 	public function getGenerator() {
 		return isset($this->conf['generator']) ? $this->conf['generator'] : self::DEFAULT_GENERATOR;
+	}
+
+	/**
+	 * Get template directory
+	 *
+	 * @return string
+	 */
+	public function getOutputDir() {
+		return $this->outputDir;
 	}
 
 	/**
@@ -96,7 +129,64 @@ class Conf
 	 *
 	 * @return string
 	 */
-	public function getOutputDir() {
-		return $this->outputDir;
+	public function getWhiteList() {
+		return $this->whiteList;
+	}
+
+	/**
+	 * Whether bench-marking should be executed
+	 *
+	 * @return bool
+	 */
+	public function isBench() {
+		return $this->action === 'bench';
+	}
+
+	/**
+	 * Whether generating should be executed
+	 *
+	 * @return bool
+	 */
+	public function isGen() {
+		return $this->action === 'gen';
+	}
+
+	/**
+	 * Whether force flag set
+	 *
+	 * @return bool
+	 */
+	public function isForce() {
+		return $this->force;
+	}
+
+	/**
+	 * Process argument
+	 *
+	 * @param array $argv
+	 */
+	protected function processArguments($argv) {
+		if (count($argv) < 2) {
+			$this->action = 'bench';
+			return;
+		}
+		switch ($argv[1]) {
+			case 'bench':
+			case 'gen':
+				$this->action = $argv[1];
+				break;
+			default:
+				throw new \Exception("Unknown action {$argv[1]}");
+		}
+		if (isset($argv[2]) && ($argv[2] === '-f' || $argv[2] === '--force')) {
+			$this->force = true;
+			$offset = 4;
+		} else {
+			$offset = 3;
+		}
+		if (count($argv) < 3) {
+			return;
+		}
+		$this->whiteList = array_splice($argv, $offset);
 	}
 }

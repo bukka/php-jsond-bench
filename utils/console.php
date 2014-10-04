@@ -14,12 +14,17 @@ $outputDir = __DIR__ . "/../output/";
 $confDir = __DIR__ . "/../conf/";
 $confFile = $confDir . "bench.json";
 
-$conf = new Conf($confFile, $templateDir, $outputDir);
+try {
+	$conf = new Conf($argv, $confFile, $templateDir, $outputDir);
 
-if ($argc > 1 && strpos($argv[1], 'g') === 0) {
-	$gen = new Generator($conf);
-	$gen->generate();
-} else {
-	$bench = new Bench($conf);
-	$bench->run();
+	if ($conf->isGen()) {
+		array_shift($argv);
+		$gen = new Generator($conf);
+		$gen->generate();
+	} else {
+		$bench = new Bench($conf);
+		$bench->run();
+	}
+} catch (\Exception $e) {
+	echo $e->getMessage() . "\n";
 }
