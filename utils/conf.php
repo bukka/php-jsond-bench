@@ -42,7 +42,7 @@ class Conf
     /**
      * Force flag
      *
-     * @var bool
+     * @var boolean
      */
     protected $force = false;
 
@@ -136,7 +136,7 @@ class Conf
     /**
      * Whether bench-marking should be executed
      *
-     * @return bool
+     * @return boolean
      */
     public function isBench() {
         return $this->action === 'bench';
@@ -145,7 +145,7 @@ class Conf
     /**
      * Whether generating should be executed
      *
-     * @return bool
+     * @return booleam
      */
     public function isGen() {
         return $this->action === 'gen';
@@ -154,7 +154,7 @@ class Conf
     /**
      * Whether force flag set
      *
-     * @return bool
+     * @return boolean
      */
     public function isForce() {
         return $this->force;
@@ -180,9 +180,9 @@ class Conf
         }
         if (isset($argv[2]) && ($argv[2] === '-f' || $argv[2] === '--force')) {
             $this->force = true;
-            $offset = 4;
-        } else {
             $offset = 3;
+        } else {
+            $offset = 2;
         }
         if (count($argv) < 3) {
             return;

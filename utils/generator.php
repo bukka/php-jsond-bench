@@ -17,12 +17,41 @@ class Generator
     protected $conf;
 
     /**
+     * Template directory path lenghth
+     *
+     * @var string
+     */
+    protected $templateDirLength;
+
+    /**
      * Constructor
      *
      * @param \Json\Bench\Conf $conf
      */
     public function __construct(Conf $conf) {
         $this->conf = $conf;
+        $this->templateDirLength = strlen($this->conf->getTemplateDir());
+    }
+
+    /**
+     * Whether the path is white listed
+     *
+     * @param string $path
+     *
+     * @return boolean
+     */
+    protected function isWhiteListed($path) {
+        $whiteList = $this->conf->getWhiteList();
+        if (empty($whiteList)) {
+            return true;
+        }
+        foreach ($whiteList as $allowedPath) {
+            if (strpos($path, $allowedPath, $this->templateDirLength) === $this->templateDirLength) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -59,14 +88,17 @@ class Generator
                     $this->generateSize("$input/$fname", "$output/$fname", $count, $seed);
                 }
             }
-        } else {
+        } elseif ($this->isWhiteListed($input)) {
             $filePaths = $this->createPaths($output, $seed, $count);
             if (!empty($filePaths)) {
                 $this->clearExistingPaths($filePaths, $output, $count);
                 $seedValue = $seed;
                 foreach ($filePaths as $path) {
-                    $cmd = sprintf("%s %s -o %s -s %d", $this->conf->getGenerator(), $input, $path, $seedValue++);
-                    echo $cmd . "\n";
+                    if (!file_exists($path)) {
+                        $cmd = sprintf("%s %s -o %s -s %d", $this->conf->getGenerator(), $input, $path, $seedValue++);
+                        echo $cmd . "\n";
+                        system($cmd);
+                    }
                 }
             }
         }
@@ -104,15 +136,17 @@ class Generator
      * @param int    $count
      * @param int    $force
      */
-    protected function clearExistingPaths($newFilePaths, $output, $count, $force = false)
+    protected function clearExistingPaths($newFilePaths, $output, $count)
     {
+        $force = $this->conf->isForce();
         if (($force || $count > 1) && file_exists($output)) {
             unlink($output);
         }
-        $nameWithoutExt = substr($output, 0, strlen($output) - 5);
-        foreach (new \GlobIterator($nameWithoutExt . '__*') as $fileInfo) {
-            if ($force || !in_array($fileInfo->getPath(), $newFilePaths)) {
-                unlink($fileInfo->getPath());
+        $pattern = substr($output, 0, strlen($output) - 5) .  '__*';
+        foreach (glob($pattern) as $path) {
+            if ($force || !in_array($path, $newFilePaths)) {
+                echo "unlink " . $path . "\n";
+                unlink($path);
             }
         }
     }

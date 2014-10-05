@@ -5,7 +5,6 @@
 		"big":    { "count": 5, "loops": 10 },
 		"medium": { "count": 9, "loops": 100 },
 		"small":  { "count": 9, "loops": 1000 },
-		"tiny":   { "count": 9, "loops": 10000 },
-		"tiny":   { "count": 1, "loops": 10000 }
+		"tiny":   { "count": 9, "loops": 10000 }
 	}
 }
