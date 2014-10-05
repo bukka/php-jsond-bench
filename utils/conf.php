@@ -6,187 +6,187 @@ namespace Json\Bench;
  */
 class Conf
 {
-	/**
-	 * Default generator executable
-	 */
-	const DEFAULT_GENERATOR = 'jsogen';
+    /**
+     * Default generator executable
+     */
+    const DEFAULT_GENERATOR = 'jsogen';
 
-	/**
-	 * Config array
-	 *
-	 * @var array
-	 */
-	protected $conf;
+    /**
+     * Config array
+     *
+     * @var array
+     */
+    protected $conf;
 
-	/**
-	 * Template directory
-	 *
-	 * @var string
-	 */
-	protected $templateDir;
+    /**
+     * Template directory
+     *
+     * @var string
+     */
+    protected $templateDir;
 
-	/**
-	 * Output directory
-	 *
-	 * @var string
-	 */
-	protected $outputDir;
+    /**
+     * Output directory
+     *
+     * @var string
+     */
+    protected $outputDir;
 
-	/**
-	 * Action name
-	 *
-	 * @var string
-	 */
-	protected $action;
+    /**
+     * Action name
+     *
+     * @var string
+     */
+    protected $action;
 
-	/**
-	 * Force flag
-	 *
-	 * @var bool
-	 */
-	protected $force = false;
+    /**
+     * Force flag
+     *
+     * @var bool
+     */
+    protected $force = false;
 
-	/**
-	 * Whitelist of directory paths
-	 *
-	 * @var mixed
-	 */
-	protected $whiteList = false;
+    /**
+     * Whitelist of directory paths
+     *
+     * @var mixed
+     */
+    protected $whiteList = false;
 
-	/**
-	 * Constructor
-	 *
-	 * @param string $confFile
-	 */
-	public function __construct($argv, $confFile, $templateDir, $outputDir) {
-		$this->conf = json_decode(file_get_contents($confFile), true);
-		$this->templateDir = $templateDir;
-		$this->outputDir = $outputDir;
-		$this->processArguments($argv);
-	}
+    /**
+     * Constructor
+     *
+     * @param string $confFile
+     */
+    public function __construct($argv, $confFile, $templateDir, $outputDir) {
+        $this->conf = json_decode(file_get_contents($confFile), true);
+        $this->templateDir = $templateDir;
+        $this->outputDir = $outputDir;
+        $this->processArguments($argv);
+    }
 
-	/**
-	 * Magic getter
-	 *
-	 * @param string $name
-	 *
-	 * @return mixed
-	 */
-	public function __get($name) {
-		switch ($name) {
-			case 'generator':
-				return $this->getGenerator();
-			case 'sizes':
-				return $this->getSizes();
-			case 'td':
-				return $this->templateDir;
-			case 'od':
-				return $this->outputDir;
-			case 'wl':
-				return $this->whiteList;
-		}
-		return null;
-	}
+    /**
+     * Magic getter
+     *
+     * @param string $name
+     *
+     * @return mixed
+     */
+    public function __get($name) {
+        switch ($name) {
+            case 'generator':
+                return $this->getGenerator();
+            case 'sizes':
+                return $this->getSizes();
+            case 'td':
+                return $this->templateDir;
+            case 'od':
+                return $this->outputDir;
+            case 'wl':
+                return $this->whiteList;
+        }
+        return null;
+    }
 
-	/**
-	 * Get generator executable
-	 *
-	 * @return string
-	 */
-	public function getGenerator() {
-		return isset($this->conf['generator']) ? $this->conf['generator'] : self::DEFAULT_GENERATOR;
-	}
+    /**
+     * Get generator executable
+     *
+     * @return string
+     */
+    public function getGenerator() {
+        return isset($this->conf['generator']) ? $this->conf['generator'] : self::DEFAULT_GENERATOR;
+    }
 
-	/**
-	 * Get template directory
-	 *
-	 * @return string
-	 */
-	public function getOutputDir() {
-		return $this->outputDir;
-	}
+    /**
+     * Get template directory
+     *
+     * @return string
+     */
+    public function getOutputDir() {
+        return $this->outputDir;
+    }
 
-	/**
-	 * Get sizes
-	 * 
-	 * @return array
-	 */
-	public function getSizes() {
-		return isset($this->conf['sizes']) ? $this->conf['sizes'] : array();
-	}
+    /**
+     * Get sizes
+     *
+     * @return array
+     */
+    public function getSizes() {
+        return isset($this->conf['sizes']) ? $this->conf['sizes'] : array();
+    }
 
-	/**
-	 * Get template directory
-	 *
-	 * @return string
-	 */
-	public function getTemplateDir() {
-		return $this->templateDir;
-	}
+    /**
+     * Get template directory
+     *
+     * @return string
+     */
+    public function getTemplateDir() {
+        return $this->templateDir;
+    }
 
-	/**
-	 * Get template directory
-	 *
-	 * @return string
-	 */
-	public function getWhiteList() {
-		return $this->whiteList;
-	}
+    /**
+     * Get template directory
+     *
+     * @return string
+     */
+    public function getWhiteList() {
+        return $this->whiteList;
+    }
 
-	/**
-	 * Whether bench-marking should be executed
-	 *
-	 * @return bool
-	 */
-	public function isBench() {
-		return $this->action === 'bench';
-	}
+    /**
+     * Whether bench-marking should be executed
+     *
+     * @return bool
+     */
+    public function isBench() {
+        return $this->action === 'bench';
+    }
 
-	/**
-	 * Whether generating should be executed
-	 *
-	 * @return bool
-	 */
-	public function isGen() {
-		return $this->action === 'gen';
-	}
+    /**
+     * Whether generating should be executed
+     *
+     * @return bool
+     */
+    public function isGen() {
+        return $this->action === 'gen';
+    }
 
-	/**
-	 * Whether force flag set
-	 *
-	 * @return bool
-	 */
-	public function isForce() {
-		return $this->force;
-	}
+    /**
+     * Whether force flag set
+     *
+     * @return bool
+     */
+    public function isForce() {
+        return $this->force;
+    }
 
-	/**
-	 * Process argument
-	 *
-	 * @param array $argv
-	 */
-	protected function processArguments($argv) {
-		if (count($argv) < 2) {
-			$this->action = 'bench';
-			return;
-		}
-		switch ($argv[1]) {
-			case 'bench':
-			case 'gen':
-				$this->action = $argv[1];
-				break;
-			default:
-				throw new \Exception("Unknown action {$argv[1]}");
-		}
-		if (isset($argv[2]) && ($argv[2] === '-f' || $argv[2] === '--force')) {
-			$this->force = true;
-			$offset = 4;
-		} else {
-			$offset = 3;
-		}
-		if (count($argv) < 3) {
-			return;
-		}
-		$this->whiteList = array_splice($argv, $offset);
-	}
+    /**
+     * Process argument
+     *
+     * @param array $argv
+     */
+    protected function processArguments($argv) {
+        if (count($argv) < 2) {
+            $this->action = 'bench';
+            return;
+        }
+        switch ($argv[1]) {
+            case 'bench':
+            case 'gen':
+                $this->action = $argv[1];
+                break;
+            default:
+                throw new \Exception("Unknown action {$argv[1]}");
+        }
+        if (isset($argv[2]) && ($argv[2] === '-f' || $argv[2] === '--force')) {
+            $this->force = true;
+            $offset = 4;
+        } else {
+            $offset = 3;
+        }
+        if (count($argv) < 3) {
+            return;
+        }
+        $this->whiteList = array_splice($argv, $offset);
+    }
 }

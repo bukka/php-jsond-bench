@@ -15,16 +15,16 @@ $confDir = __DIR__ . "/../conf/";
 $confFile = $confDir . "bench.json";
 
 try {
-	$conf = new Conf($argv, $confFile, $templateDir, $outputDir);
+    $conf = new Conf($argv, $confFile, $templateDir, $outputDir);
 
-	if ($conf->isGen()) {
-		array_shift($argv);
-		$gen = new Generator($conf);
-		$gen->generate();
-	} else {
-		$bench = new Bench($conf);
-		$bench->run();
-	}
+    if ($conf->isGen()) {
+        array_shift($argv);
+        $gen = new Generator($conf);
+        $gen->generate();
+    } else {
+        $bench = new Bench($conf);
+        $bench->run();
+    }
 } catch (\Exception $e) {
-	echo $e->getMessage() . "\n";
+    echo $e->getMessage() . "\n";
 }
