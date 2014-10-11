@@ -161,6 +161,28 @@ class Conf
     }
 
     /**
+     * Whether the path is white listed
+     *
+     * @param string $path
+     *
+     * @return boolean
+     */
+    public function isWhiteListed($path) {
+        $whiteList = $this->getWhiteList();
+        if (empty($whiteList)) {
+            return true;
+        }
+        $templateDirLength = strlen($this->templateDir);
+        foreach ($whiteList as $allowedPath) {
+            if (strpos($path, $allowedPath, $templateDirLength) === $templateDirLength) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Process argument
      *
      * @param array $argv

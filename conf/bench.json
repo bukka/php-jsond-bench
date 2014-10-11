@@ -1,10 +1,10 @@
 {
 	"generator": "jsogen",
 	"sizes": {
-		"huge":   { "count": 1, "loops": 1 },
-		"big":    { "count": 5, "loops": 10 },
-		"medium": { "count": 9, "loops": 100 },
-		"small":  { "count": 9, "loops": 1000 },
-		"tiny":   { "count": 9, "loops": 10000 }
+		"huge":   { "count": 1, "loops": 100 },
+		"big":    { "count": 5, "loops": 1000 },
+		"medium": { "count": 9, "loops": 10000 },
+		"small":  { "count": 9, "loops": 100000 },
+		"tiny":   { "count": 9, "loops": 1000000 }
 	}
 }

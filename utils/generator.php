@@ -17,41 +17,12 @@ class Generator
     protected $conf;
 
     /**
-     * Template directory path lenghth
-     *
-     * @var string
-     */
-    protected $templateDirLength;
-
-    /**
      * Constructor
      *
      * @param \Json\Bench\Conf $conf
      */
     public function __construct(Conf $conf) {
         $this->conf = $conf;
-        $this->templateDirLength = strlen($this->conf->getTemplateDir());
-    }
-
-    /**
-     * Whether the path is white listed
-     *
-     * @param string $path
-     *
-     * @return boolean
-     */
-    protected function isWhiteListed($path) {
-        $whiteList = $this->conf->getWhiteList();
-        if (empty($whiteList)) {
-            return true;
-        }
-        foreach ($whiteList as $allowedPath) {
-            if (strpos($path, $allowedPath, $this->templateDirLength) === $this->templateDirLength) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**
@@ -88,7 +59,7 @@ class Generator
                     $this->generateSize("$input/$fname", "$output/$fname", $count, $seed);
                 }
             }
-        } elseif ($this->isWhiteListed($input)) {
+        } elseif ($this->conf->isWhiteListed($input)) {
             $filePaths = $this->createPaths($output, $seed, $count);
             if (!empty($filePaths)) {
                 $this->clearExistingPaths($filePaths, $output, $count);
@@ -134,7 +105,6 @@ class Generator
      * @param array  $newFilePaths
      * @param string $output
      * @param int    $count
-     * @param int    $force
      */
     protected function clearExistingPaths($newFilePaths, $output, $count)
     {
