@@ -163,18 +163,19 @@ class Conf
     /**
      * Whether the path is white listed
      *
-     * @param string $path
+     * @param string  $path       Path
+     * @param boolean $isTemplate Whether to check template
      *
      * @return boolean
      */
-    public function isWhiteListed($path) {
+    public function isWhiteListed($path, $isTemplate) {
         $whiteList = $this->getWhiteList();
         if (empty($whiteList)) {
             return true;
         }
-        $templateDirLength = strlen($this->templateDir);
+        $dirLength = strlen($isTemplate ? $this->templateDir : $this->outputDir);
         foreach ($whiteList as $allowedPath) {
-            if (strpos($path, $allowedPath, $templateDirLength) === $templateDirLength) {
+            if (strpos($path, $allowedPath, $dirLength) === $dirLength) {
                 return true;
             }
         }

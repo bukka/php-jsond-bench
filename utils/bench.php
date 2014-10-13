@@ -54,7 +54,7 @@ class Bench
                     $this->runSize("$path/$fname", $loops);
                 }
             }
-        } elseif ($this->conf->isWhiteListed($path)) {
+        } elseif ($this->conf->isWhiteListed($path, false)) {
             $this->bench($path, $loops);
         }
     }

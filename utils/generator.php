@@ -59,7 +59,7 @@ class Generator
                     $this->generateSize("$input/$fname", "$output/$fname", $count, $seed);
                 }
             }
-        } elseif ($this->conf->isWhiteListed($input)) {
+        } elseif ($this->conf->isWhiteListed($input, true)) {
             $filePaths = $this->createPaths($output, $seed, $count);
             if (!empty($filePaths)) {
                 $this->clearExistingPaths($filePaths, $output, $count);
