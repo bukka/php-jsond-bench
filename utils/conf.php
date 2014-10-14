@@ -173,9 +173,15 @@ class Conf
         if (empty($whiteList)) {
             return true;
         }
-        $dirLength = strlen($isTemplate ? $this->templateDir : $this->outputDir);
+        $dir = $isTemplate ? $this->templateDir : $this->outputDir;
+        $dirName = basename($dir);
+        $dirLength = strlen($dir);
         foreach ($whiteList as $allowedPath) {
-            if (strpos($path, $allowedPath, $dirLength) === $dirLength) {
+            $allowedDirLength = $dirLength;
+            if (strpos($allowedPath, $dirName) === 0) {
+                $allowedDirLength -= strlen($dirName) + 1;
+            }
+            if (strpos($path, $allowedPath, $allowedDirLength) === $allowedDirLength) {
                 return true;
             }
         }
