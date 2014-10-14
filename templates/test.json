@@ -10,6 +10,7 @@
         "utf8_12": "{{string(10, 20, 'utf8_12')}}",
         "escape": "{{string(10, 30, 'escape')}}",
         "escape_0_5": "{{string(10, 30, 'escape', 'basic', 0.5)}}",
-        "escape_unicode": "{{string(30, 30, 'escape_utf_2')}}"
+        "escape_unicode": "{{string(30, 30, 'escape_utf_2')}}",
+        "float": "{{float(1, 10, precision=4)}}"
 	}
 ]
