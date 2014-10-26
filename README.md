@@ -9,12 +9,13 @@ The console is a script in the [util/](util/) directory. The main configuration 
 The script can be run from the shell as
 
 ```
-$ php util/console.php command [whiteList]
+$ php util/console.php command [options] [whiteList]
 ```
 
 where `command` must be one of the following:
 
-* `gen` - generates instances to the new `output` directory
+* `gen` - generates instances to the new `output` directory. The following `options` can be supplied:
+  * `--force` - rewrites existing files in the output directory
 * `bench` - runs benchmarks in the `output` directory
 
 The option `whiteList` specifies list of allowed directories that will be processed (generated/benchmarked). If it's not supplied, all directories will be processed.
