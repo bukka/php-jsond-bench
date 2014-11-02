@@ -1,13 +1,11 @@
 <?php
 
-namespace Json\Bench;
-
-use Json\Bench\Conf;
+namespace Bukka\Jsond\Bench;
 
 /**
  * Benchmark class
  */
-class Bench
+class Run
 {
     /**
      * Main configuration

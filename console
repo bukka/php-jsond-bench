@@ -1,0 +1,28 @@
+#!/usr/bin/env php
+<?php
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+use Bukka\Jsond\Bench\Conf;
+use Bukka\Jsond\Bench\Run;
+use Bukka\Jsond\Bench\Generator;
+
+$templateDir = __DIR__ . "/templates/";
+$outputDir = __DIR__ . "/output/";
+$confDir = __DIR__ . "/conf/";
+$confFile = $confDir . "bench.json";
+
+try {
+    $conf = new Conf($argv, $confFile, $templateDir, $outputDir);
+
+    if ($conf->isGen()) {
+        array_shift($argv);
+        $gen = new Generator($conf);
+        $gen->generate();
+    } else {
+        $run = new Run($conf);
+        $run->run();
+    }
+} catch (\Exception $e) {
+    echo $e->getMessage() . "\n";
+}

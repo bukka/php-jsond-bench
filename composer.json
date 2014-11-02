@@ -1,0 +1,13 @@
+{
+    "name": "bukka/jsond-bench",
+    "license": "MIT",
+    "type": "project",
+    "description": "The Benchmark for JSONd extension",
+    "autoload": {
+        "psr-4": { "Bukka\\": "src/Bukka/" }
+    },
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/console": "2.5.*"
+    }
+}

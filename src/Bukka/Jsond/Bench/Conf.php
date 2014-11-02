@@ -1,5 +1,5 @@
 <?php
-namespace Json\Bench;
+namespace Bukka\Jsond\Bench;
 
 /**
  * Config class
