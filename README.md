@@ -4,12 +4,12 @@ This is a benchmark for PHP json and jsond extension. The JSON instances are gen
 
 ## Console
 
-The console is a script in the [util/](util/) directory. The main configuration for the script is [conf/bench.json](conf/bench.json).
+The console is a script that executes all commands. The main configuration is in [conf/bench.json](conf/bench.json).
 
 The script can be run from the shell as
 
 ```
-$ php util/console.php command [options] [whiteList]
+$ php console command [options] [whiteList]
 ```
 
 where `command` must be one of the following:

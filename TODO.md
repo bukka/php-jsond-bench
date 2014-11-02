@@ -1,15 +1,15 @@
 # TODO list
 
 ## PHP utils
-- use top level structure
-- use PSR naming
 
+### Console
+- Use symfony/console
 
 ### Generator
 - Regenerate modified files
 
 ### Bench
-- rename to Run
+- execute every benchmark in a new process
 - run instances alphabetically
 - process numbers and print summary results
 
