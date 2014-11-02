@@ -33,6 +33,13 @@ class Conf
     protected $outputDir;
 
     /**
+     * Bench directory
+     *
+     * @var string
+     */
+    protected $benchDir;
+
+    /**
      * Action name
      *
      * @var string
@@ -58,10 +65,11 @@ class Conf
      *
      * @param string $confFile
      */
-    public function __construct($argv, $confFile, $templateDir, $outputDir) {
+    public function __construct($argv, $confFile, $templateDir, $outputDir, $benchDir) {
         $this->conf = json_decode(file_get_contents($confFile), true);
         $this->templateDir = $templateDir;
         $this->outputDir = $outputDir;
+        $this->benchDir = $benchDir;
         $this->processArguments($argv);
     }
 
@@ -82,6 +90,8 @@ class Conf
                 return $this->templateDir;
             case 'od':
                 return $this->outputDir;
+            case 'bd':
+                return $this->benchDir;
             case 'wl':
                 return $this->whiteList;
         }
@@ -104,6 +114,15 @@ class Conf
      */
     public function getOutputDir() {
         return $this->outputDir;
+    }
+
+    /**
+     * Get bench directory
+     *
+     * @return string
+     */
+    public function getBenchDir() {
+        return $this->benchDir;
     }
 
     /**

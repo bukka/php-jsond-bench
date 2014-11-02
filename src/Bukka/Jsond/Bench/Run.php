@@ -53,26 +53,54 @@ class Run
                 }
             }
         } elseif ($this->conf->isWhiteListed($path, false)) {
-            $this->bench($path, $loops);
+            $this->benchFile($path, $loops);
         }
     }
 
-    protected function bench($path, $loops) {
+    /**
+     * Bench file instance
+     *
+     * @param string $path
+     * @param int $loops
+     */
+    protected function benchFile($path, $loops) {
         printf("FILE: %s\n", $path);
         $string = file_get_contents($path);
         // Decoding
         $decodeTestResult = $this->testDecode($string);
-        $jsonDecodeTime = $this->benchJsonDecode($string, $loops);
-        $jsondDecodeTime = $this->benchJsondDecode($string, $loops);
+        $jsonDecodeTime = $this->bench('json/decode', $path, $loops);
+        $jsondDecodeTime = $this->bench('jsond/decode', $path, $loops);
         printf("DECODING [%s]: json: %s :: jsond: %s\n", $decodeTestResult, $jsonDecodeTime, $jsondDecodeTime);
         // Encoding
-        $zval = json_decode($string);
         $encodeTestResult = $this->testEncode($string);
-        $jsonEncodeTime = $this->benchJsonEncode($zval, $loops);
-        $jsondEncodeTime = $this->benchJsondEncode($zval, $loops);
+        $jsonEncodeTime = $this->bench('json/encode', $path, $loops);
+        $jsondEncodeTime = $this->bench('jsond/encode', $path, $loops);
         printf("ENCODING [%s]: json: %s :: jsond: %s\n\n", $encodeTestResult, $jsonEncodeTime, $jsondEncodeTime);
     }
 
+    /**
+     * Bench file
+     *
+     * @param string $name
+     * @param string $path
+     * @param int    $loops
+     *
+     * @return float
+     */
+    protected function bench($name, $path, $loops) {
+        $bench = $this->conf->getBenchDir() . $name . '.php';
+        $command = "php $bench $path $loops";
+        $result = json_decode(exec($command));
+        return isset($result->time) ? $result->time : 0;
+    }
+
+    /**
+     * Test decoding
+     *
+     * @param string $string
+     *
+     * @return string
+     */
     protected function testDecode($string) {
         $json = json_decode($string);
         $jsond = jsond_decode($string);
@@ -89,6 +117,13 @@ class Run
         return 'SS';
     }
 
+    /**
+     * Test encoding
+     *
+     * @param string $string
+     *
+     * @return string
+     */
     protected function testEncode($object) {
         $json = json_encode($object);
         $jsond = jsond_encode($object);
@@ -102,41 +137,5 @@ class Run
             return 'SE';
         }
         return 'NN';
-    }
-
-    protected function benchJsonDecode($string, $loops) {
-        $start = microtime(true);
-        for ($i = 0; $i < $loops; $i++) {
-            json_decode($string);
-        }
-        $end = microtime(true);
-        return $end - $start;
-    }
-
-    protected function benchJsondDecode($string, $loops) {
-        $start = microtime(true);
-        for ($i = 0; $i < $loops; $i++) {
-            jsond_decode($string);
-        }
-        $end = microtime(true);
-        return $end - $start;
-    }
-
-    protected function benchJsonEncode($zval, $loops) {
-        $start = microtime(true);
-        for ($i = 0; $i < $loops; $i++) {
-            json_encode($zval);
-        }
-        $end = microtime(true);
-        return $end - $start;
-    }
-
-    protected function benchJsondEncode($zval, $loops) {
-        $start = microtime(true);
-        for ($i = 0; $i < $loops; $i++) {
-            jsond_encode($zval);
-        }
-        $end = microtime(true);
-        return $end - $start;
     }
 }

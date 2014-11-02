@@ -9,11 +9,12 @@ use Bukka\Jsond\Bench\Generator;
 
 $templateDir = __DIR__ . "/templates/";
 $outputDir = __DIR__ . "/output/";
+$benchDir = __DIR__ . "/bench/";
 $confDir = __DIR__ . "/conf/";
 $confFile = $confDir . "bench.json";
 
 try {
-    $conf = new Conf($argv, $confFile, $templateDir, $outputDir);
+    $conf = new Conf($argv, $confFile, $templateDir, $outputDir, $benchDir);
 
     if ($conf->isGen()) {
         array_shift($argv);

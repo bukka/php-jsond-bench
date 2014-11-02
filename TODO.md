@@ -9,7 +9,6 @@
 - Regenerate modified files
 
 ### Bench
-- execute every benchmark in a new process
 - run instances alphabetically
 - process numbers and print summary results
 
