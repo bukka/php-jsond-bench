@@ -12,6 +12,11 @@ class Conf
     const DEFAULT_GENERATOR = 'jsogen';
 
     /**
+     * Default storage
+     */
+    const DEFAULT_STORAGE = 'file';
+
+    /**
      * Config array
      *
      * @var array
@@ -40,6 +45,20 @@ class Conf
     protected $benchDir;
 
     /**
+     * Storage directory
+     *
+     * @var string
+     */
+    protected $storageDir;
+
+    /**
+     * Storage
+     *
+     * @var\Bukka\Jsond\Bench\Storage\StorageInterface
+     */
+    protected $storage = null;
+
+    /**
      * Action name
      *
      * @var string
@@ -60,16 +79,18 @@ class Conf
      */
     protected $whiteList = false;
 
+
     /**
      * Constructor
      *
      * @param string $confFile
      */
-    public function __construct($argv, $confFile, $templateDir, $outputDir, $benchDir) {
+    public function __construct($argv, $confFile, $templateDir, $outputDir, $benchDir, $storageDir) {
         $this->conf = json_decode(file_get_contents($confFile), true);
         $this->templateDir = $templateDir;
         $this->outputDir = $outputDir;
         $this->benchDir = $benchDir;
+        $this->storageDir = $storageDir;
         $this->processArguments($argv);
     }
 
@@ -84,12 +105,16 @@ class Conf
         switch ($name) {
             case 'generator':
                 return $this->getGenerator();
+            case 'storage':
+                return $this->getStorage();
             case 'sizes':
                 return $this->getSizes();
             case 'td':
                 return $this->templateDir;
             case 'od':
                 return $this->outputDir;
+            case 'sd':
+                return $this->storageDir;
             case 'bd':
                 return $this->benchDir;
             case 'wl':
@@ -105,6 +130,32 @@ class Conf
      */
     public function getGenerator() {
         return isset($this->conf['generator']) ? $this->conf['generator'] : self::DEFAULT_GENERATOR;
+    }
+
+    /**
+     * Get storage instance
+     *
+     * @return \Bukka\Jsond\Bench\Storage\StorageInterface
+     */
+    public function getStorage() {
+        if (!$this->storage) {
+            $storageName = isset($this->conf['storage']) ? $this->conf['storage'] : self::DEFAULT_STORAGE;
+            $storageClass = __NAMESPACE__ . '\\Storage\\' . ucfirst($storageName) . 'Storage';
+            if (!class_exists($storageClass)) {
+                throw new \Exception('Invalid storage class ' . $storageClass);
+            }
+            $this->storage = new $storageClass($this);
+        }
+        return $this->storage;
+    }
+
+    /**
+     * Get storage directory
+     *
+     * @return string
+     */
+    public function getStorageDir() {
+        return $this->storageDir;
     }
 
     /**

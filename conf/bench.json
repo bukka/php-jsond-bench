@@ -1,5 +1,6 @@
 {
 	"generator": "jsogen",
+    "storage": "file",
 	"sizes": {
 		"huge":   { "count": 1, "loops": 100 },
 		"big":    { "count": 4, "loops": 1000 },

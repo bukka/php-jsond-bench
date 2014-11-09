@@ -15,12 +15,20 @@ class Run
     protected $conf;
 
     /**
+     * Storage
+     *
+     * @var\Bukka\Jsond\Bench\Storage\StorageInterface
+     */
+    protected $storage;
+
+    /**
      * Constructor
      *
      * @param \Json\Bench\Conf $conf
      */
     public function __construct(Conf $conf) {
         $this->conf = $conf;
+        $this->storage = $conf->getStorage();
     }
 
     /**
@@ -31,11 +39,13 @@ class Run
      * - print results
      */
     public function run() {
+        $this->storage->open();
         foreach ($this->conf->getSizes() as $sizeName => $sizeConf) {
             $output = $this->conf->getOutputDir() . $sizeName;
             $loops = isset($sizeConf['loops']) ? $sizeConf['loops'] : 1;
             $this->runSize($output, $loops);
         }
+        $this->storage->close();
     }
 
     /**
@@ -70,12 +80,22 @@ class Run
         $decodeTestResult = $this->testDecode($string);
         $jsonDecodeTime = $this->bench('json/decode', $path, $loops);
         $jsondDecodeTime = $this->bench('jsond/decode', $path, $loops);
-        printf("DECODING [%s]: json: %s :: jsond: %s\n", $decodeTestResult, $jsonDecodeTime, $jsondDecodeTime);
+        printf("DECODING [%s]: json: %s :: jsond: %s\n",
+                $decodeTestResult, $jsonDecodeTime, $jsondDecodeTime);
+        $this->storage->save($path, 'decode', $loops, array(
+            'json' => $jsonDecodeTime,
+            'jsond' => $jsondDecodeTime
+        ));
         // Encoding
         $encodeTestResult = $this->testEncode($string);
         $jsonEncodeTime = $this->bench('json/encode', $path, $loops);
         $jsondEncodeTime = $this->bench('jsond/encode', $path, $loops);
-        printf("ENCODING [%s]: json: %s :: jsond: %s\n\n", $encodeTestResult, $jsonEncodeTime, $jsondEncodeTime);
+        printf("ENCODING [%s]: json: %s :: jsond: %s\n\n",
+                $encodeTestResult, $jsonEncodeTime, $jsondEncodeTime);
+        $this->storage->save($path, 'encode', $loops, array(
+            'json' => $jsonEncodeTime,
+            'jsond' => $jsondEncodeTime
+        ));
     }
 
     /**
