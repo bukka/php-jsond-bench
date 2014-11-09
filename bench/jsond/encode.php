@@ -14,7 +14,7 @@ $loops = intval($argv[2]);
 
 $start = microtime(true);
 for ($i = 0; $i < $loops; $i++) {
-    jsond_decode($string);
+    jsond_encode($json);
 }
 $end = microtime(true);
 echo json_encode(array('time' => $end - $start));
