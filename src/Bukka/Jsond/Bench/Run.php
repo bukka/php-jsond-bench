@@ -3,7 +3,7 @@
 namespace Bukka\Jsond\Bench;
 
 /**
- * Benchmark class
+ * Benchmark run class
  */
 class Run
 {
@@ -75,23 +75,20 @@ class Run
      */
     protected function benchFile($path, $loops) {
         printf("FILE: %s\n", $path);
-        $string = file_get_contents($path);
         // Decoding
-        $decodeTestResult = $this->testDecode($string);
         $jsonDecodeTime = $this->bench('json/decode', $path, $loops);
         $jsondDecodeTime = $this->bench('jsond/decode', $path, $loops);
-        printf("DECODING [%s]: json: %s :: jsond: %s\n",
-                $decodeTestResult, $jsonDecodeTime, $jsondDecodeTime);
+        printf("DECODING json: %s :: jsond: %s\n",
+                $jsonDecodeTime, $jsondDecodeTime);
         $this->storage->save($path, 'decode', $loops, array(
             'json' => $jsonDecodeTime,
             'jsond' => $jsondDecodeTime
         ));
         // Encoding
-        $encodeTestResult = $this->testEncode($string);
         $jsonEncodeTime = $this->bench('json/encode', $path, $loops);
         $jsondEncodeTime = $this->bench('jsond/encode', $path, $loops);
-        printf("ENCODING [%s]: json: %s :: jsond: %s\n\n",
-                $encodeTestResult, $jsonEncodeTime, $jsondEncodeTime);
+        printf("ENCODING: json: %s :: jsond: %s\n\n",
+                $jsonEncodeTime, $jsondEncodeTime);
         $this->storage->save($path, 'encode', $loops, array(
             'json' => $jsonEncodeTime,
             'jsond' => $jsondEncodeTime
@@ -112,50 +109,5 @@ class Run
         $command = "php $bench $path $loops";
         $result = json_decode(exec($command));
         return isset($result->time) ? $result->time : 0;
-    }
-
-    /**
-     * Test decoding
-     *
-     * @param string $string
-     *
-     * @return string
-     */
-    protected function testDecode($string) {
-        $json = json_decode($string);
-        $jsond = jsond_decode($string);
-        if (is_null($json) && is_null($jsond)) {
-            return 'EE';
-        }
-        if (is_null($json)) {
-            return 'ES';
-        }
-        if (is_null($jsond)) {
-            return 'SE';
-        }
-        // todo: deep comparison
-        return 'SS';
-    }
-
-    /**
-     * Test encoding
-     *
-     * @param string $string
-     *
-     * @return string
-     */
-    protected function testEncode($object) {
-        $json = json_encode($object);
-        $jsond = jsond_encode($object);
-        if ($json === $jsond) {
-            return is_null($json) ? 'EE' : 'SS';
-        }
-        if (is_null($json)) {
-            return 'ES';
-        }
-        if (is_null($jsond)) {
-            return 'SE';
-        }
-        return 'NN';
     }
 }

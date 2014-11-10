@@ -13,5 +13,5 @@
 - process numbers and print summary results
 
 ### Tester
-- create a new tester
+- deep comparison for decoding
 - valgrind support

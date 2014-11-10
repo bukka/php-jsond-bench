@@ -5,6 +5,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use Bukka\Jsond\Bench\Conf;
 use Bukka\Jsond\Bench\Run;
+use Bukka\Jsond\Bench\Tester;
 use Bukka\Jsond\Bench\Generator;
 
 $templateDir = __DIR__ . "/templates/";
@@ -21,6 +22,9 @@ try {
         array_shift($argv);
         $gen = new Generator($conf);
         $gen->generate();
+    } elseif ($conf->isTest()) {
+        $tester = new Tester($conf);
+        $tester->test();
     } else {
         $run = new Run($conf);
         $run->run();

@@ -222,6 +222,15 @@ class Conf
     }
 
     /**
+     * Whether generating should be executed
+     *
+     * @return booleam
+     */
+    public function isTest() {
+        return $this->action === 'test';
+    }
+
+    /**
      * Whether force flag set
      *
      * @return boolean
@@ -272,6 +281,7 @@ class Conf
         switch ($argv[1]) {
             case 'bench':
             case 'gen':
+            case 'test':
                 $this->action = $argv[1];
                 break;
             default:

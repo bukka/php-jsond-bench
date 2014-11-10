@@ -39,7 +39,7 @@ class FileStorage extends AbstractStorage
      */
     public function flush()
     {
-        $dirPath = $this->conf->getStorageDir() . $this->openTime->format("Ymd_his");
+        $dirPath = $this->conf->getStorageDir() . $this->openTime->format("Ymd_His");
         if (!is_dir($dirPath) && !mkdir($dirPath, 0777, true)) {
             throw new \Exception("Creating dir $dirPath failed");
         }
