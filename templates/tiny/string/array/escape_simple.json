@@ -1,4 +1,4 @@
 [
     "{{repeat(1, 6)}}",
-    "{{string(1, 6,'escape')}}"
+    "{{string(1, 6, 'escape')}}"
 ]
