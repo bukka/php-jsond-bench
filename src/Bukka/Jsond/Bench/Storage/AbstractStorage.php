@@ -2,7 +2,7 @@
 
 namespace Bukka\Jsond\Bench\Storage;
 
-use Bukka\Jsond\Bench\Conf;
+use Bukka\Jsond\Bench\Conf\Conf;
 
 /**
  * Abstract Storage

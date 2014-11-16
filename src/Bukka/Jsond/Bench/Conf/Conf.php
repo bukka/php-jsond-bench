@@ -1,5 +1,5 @@
 <?php
-namespace Bukka\Jsond\Bench;
+namespace Bukka\Jsond\Bench\Conf;
 
 /**
  * Config class
@@ -140,7 +140,7 @@ class Conf
     public function getStorage() {
         if (!$this->storage) {
             $storageName = isset($this->conf['storage']) ? $this->conf['storage'] : self::DEFAULT_STORAGE;
-            $storageClass = __NAMESPACE__ . '\\Storage\\' . ucfirst($storageName) . 'Storage';
+            $storageClass = '\Bukka\Jsond\Bench\Storage\\' . ucfirst($storageName) . 'Storage';
             if (!class_exists($storageClass)) {
                 throw new \Exception('Invalid storage class ' . $storageClass);
             }

@@ -1,35 +1,19 @@
 <?php
 
-namespace Bukka\Jsond\Bench;
+namespace Bukka\Jsond\Bench\Action;
 
 /**
- * Templates tester class
+ * Templates checking class
  */
-class Tester
+class CheckAction extends AbstractAction
 {
-    /**
-     * Main configuration
-     *
-     * @var \Json\Bench\Conf
-     */
-    protected $conf;
-
-    /**
-     * Constructor
-     *
-     * @param \Json\Bench\Conf $conf
-     */
-    public function __construct(Conf $conf) {
-        $this->conf = $conf;
-    }
-
     /**
      * Test templates
      */
-    public function test() {
+    public function execute() {
         foreach ($this->conf->getSizes() as $sizeName => $sizeConf) {
             $output = $this->conf->getOutputDir() . $sizeName;
-            $this->testSize($output);
+            $this->executeSize($output);
         }
     }
 
@@ -38,12 +22,12 @@ class Tester
      *
      * @param string $output
      */
-    protected function testSize($path) {
+    protected function executeSize($path) {
         if (is_dir($path)) {
             foreach (new \DirectoryIterator($path) as $fileInfo) {
                 if (!$fileInfo->isDot()) {
                     $fname = $fileInfo->getFilename();
-                    $this->testSize("$path/$fname");
+                    $this->executeSize("$path/$fname");
                 }
             }
         } elseif ($this->conf->isWhiteListed($path, false)) {

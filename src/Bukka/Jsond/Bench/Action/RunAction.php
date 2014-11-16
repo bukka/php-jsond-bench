@@ -1,19 +1,14 @@
 <?php
 
-namespace Bukka\Jsond\Bench;
+namespace Bukka\Jsond\Bench\Action;
+
+use Bukka\Jsond\Bench\Conf\Conf;
 
 /**
  * Benchmark run class
  */
-class Run
+class RunAction extends AbstractAction
 {
-    /**
-     * Main configuration
-     *
-     * @var \Json\Bench\Conf
-     */
-    protected $conf;
-
     /**
      * Storage
      *
@@ -24,10 +19,10 @@ class Run
     /**
      * Constructor
      *
-     * @param \Json\Bench\Conf $conf
+     * @param \Json\Bench\Conf\Conf $conf
      */
     public function __construct(Conf $conf) {
-        $this->conf = $conf;
+        parent::__construct($conf);
         $this->storage = $conf->getStorage();
     }
 
@@ -38,12 +33,12 @@ class Run
      * - measure time json_encode and jsond_encode
      * - print results
      */
-    public function run() {
+    public function execute() {
         $this->storage->open();
         foreach ($this->conf->getSizes() as $sizeName => $sizeConf) {
             $output = $this->conf->getOutputDir() . $sizeName;
             $loops = isset($sizeConf['loops']) ? $sizeConf['loops'] : 1;
-            $this->runSize($output, $loops);
+            $this->executeSize($output, $loops);
         }
         $this->storage->close();
     }
@@ -54,12 +49,12 @@ class Run
      * @param string $output
      * @param int    $loops
      */
-    protected function runSize($path, $loops) {
+    protected function executeSize($path, $loops) {
         if (is_dir($path)) {
             foreach (new \DirectoryIterator($path) as $fileInfo) {
                 if (!$fileInfo->isDot()) {
                     $fname = $fileInfo->getFilename();
-                    $this->runSize("$path/$fname", $loops);
+                    $this->executeSize("$path/$fname", $loops);
                 }
             }
         } elseif ($this->conf->isWhiteListed($path, false)) {

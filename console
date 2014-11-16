@@ -3,10 +3,10 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-use Bukka\Jsond\Bench\Conf;
-use Bukka\Jsond\Bench\Run;
-use Bukka\Jsond\Bench\Tester;
-use Bukka\Jsond\Bench\Generator;
+use Bukka\Jsond\Bench\Conf\Conf;
+use Bukka\Jsond\Bench\Action\RunAction;
+use Bukka\Jsond\Bench\Action\CheckAction;
+use Bukka\Jsond\Bench\Action\GenAction;
 
 $templateDir = __DIR__ . "/templates/";
 $outputDir = __DIR__ . "/output/";
@@ -20,15 +20,13 @@ try {
 
     if ($conf->isGen()) {
         array_shift($argv);
-        $gen = new Generator($conf);
-        $gen->generate();
+        $action = new GenAction($conf);
     } elseif ($conf->isTest()) {
-        $tester = new Tester($conf);
-        $tester->test();
+        $action = new CheckAction($conf);
     } else {
-        $run = new Run($conf);
-        $run->run();
+        $action = new RunAction($conf);
     }
+    $action->execute();
 } catch (\Exception $e) {
     echo $e->getMessage() . "\n";
 }
