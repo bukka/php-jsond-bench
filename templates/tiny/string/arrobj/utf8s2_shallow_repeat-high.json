@@ -2,6 +2,6 @@
     "{{repeat(2)}}": true,
 	"k": [
         "{{repeat(3)}}",
-        "{{string(3, 'utf8_2')}}"
+        "{{string(3, kind='utf8_2')}}"
     ]
 }
