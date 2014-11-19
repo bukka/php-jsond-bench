@@ -10,13 +10,13 @@ use Bukka\Jsond\Bench\Conf\Conf;
 abstract class AbstractStorage implements StorageInterface
 {
     /**
-     * @var \Bukka\Jsond\Bench\Conf
+     * @var Conf
      */
     protected $conf;
 
     /**
      *
-     * @param \Bukka\Jsond\Bench\Conf $conf
+     * @param Conf $conf
      */
     public function __construct(Conf $conf)
     {

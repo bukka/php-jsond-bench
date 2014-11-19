@@ -12,18 +12,21 @@ abstract class AbstractAction
      /**
      * Main configuration
      *
-     * @var \Json\Bench\Conf\Conf
+     * @var Conf
      */
     protected $conf;
 
     /**
      * Constructor
      *
-     * @param \Json\Bench\Conf\Conf $conf
+     * @param Conf $conf
      */
     public function __construct(Conf $conf) {
         $this->conf = $conf;
     }
 
+    /**
+     * Abstract execution method
+     */
     abstract function execute();
 }

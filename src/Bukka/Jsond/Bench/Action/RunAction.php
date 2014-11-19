@@ -19,7 +19,7 @@ class RunAction extends AbstractAction
     /**
      * Constructor
      *
-     * @param \Json\Bench\Conf\Conf $conf
+     * @param Conf $conf
      */
     public function __construct(Conf $conf) {
         parent::__construct($conf);

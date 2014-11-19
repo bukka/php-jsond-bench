@@ -91,7 +91,9 @@ class Conf
         $this->outputDir = $outputDir;
         $this->benchDir = $benchDir;
         $this->storageDir = $storageDir;
-        $this->processArguments($argv);
+        if ($argv) {
+            $this->processArguments($argv);
+        }
     }
 
     /**
