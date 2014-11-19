@@ -24,7 +24,7 @@ class GenCommand extends Command
      *
      * @param Conf $conf
      */
-    public function __construct($name, Conf $conf)
+    public function __construct(Conf $conf, $name = null)
     {
         parent::__construct($name);
         $this->conf = $conf;

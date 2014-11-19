@@ -1,6 +1,9 @@
 <?php
 
+require_once __DIR__ . '/vendor/autoload.php';
+
 use Bukka\Jsond\Bench\Command\GenCommand;
+use Bukka\Jsond\Bench\Conf\Conf;
 
 use Symfony\Component\Console\Application;
 
