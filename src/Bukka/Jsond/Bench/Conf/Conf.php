@@ -206,6 +206,17 @@ class Conf
     }
 
     /**
+     * Set template directory
+     *
+     * @return Conf
+     */
+    public function setWhiteList($whiteList) {
+        $this->whiteList = $whiteList;
+
+        return $this;
+    }
+
+    /**
      * Whether bench-marking should be executed
      *
      * @return boolean
@@ -233,6 +244,28 @@ class Conf
     }
 
     /**
+     * Disable force flag
+     *
+     * @return Conf
+     */
+    public function disableForce() {
+        $this->force = false;
+
+        return $this;
+    }
+
+    /**
+     * Enable force flag
+     *
+     * @return Conf
+     */
+    public function enableForce() {
+        $this->force = true;
+
+        return $this;
+    }
+
+    /**
      * Whether force flag set
      *
      * @return boolean
@@ -240,6 +273,8 @@ class Conf
     public function isForce() {
         return $this->force;
     }
+
+
 
     /**
      * Whether the path is white listed

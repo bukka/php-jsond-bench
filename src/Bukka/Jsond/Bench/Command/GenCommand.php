@@ -3,6 +3,7 @@
 namespace Bukka\Jsond\Bench\Command;
 
 use Bukka\Jsond\Bench\Conf\Conf;
+use Bukka\Jsond\Bench\Action\GenAction;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -60,6 +61,12 @@ class GenCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        
+        $this->conf->setWhiteList($input->getArgument('whiteList'));
+        if ($input->getOption('force')) {
+            $this->conf->enableForce();
+        }
+
+        $action = new GenAction($this->conf);
+        $action->execute();
     }
 }
