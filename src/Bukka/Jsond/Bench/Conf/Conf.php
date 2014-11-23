@@ -85,15 +85,12 @@ class Conf
      *
      * @param string $confFile
      */
-    public function __construct($argv, $confFile, $templateDir, $outputDir, $benchDir, $storageDir) {
+    public function __construct($confFile, $templateDir, $outputDir, $benchDir, $storageDir) {
         $this->conf = json_decode(file_get_contents($confFile), true);
         $this->templateDir = $templateDir;
         $this->outputDir = $outputDir;
         $this->benchDir = $benchDir;
         $this->storageDir = $storageDir;
-        if ($argv) {
-            $this->processArguments($argv);
-        }
     }
 
     /**
@@ -274,8 +271,6 @@ class Conf
         return $this->force;
     }
 
-
-
     /**
      * Whether the path is white listed
      *
@@ -303,36 +298,5 @@ class Conf
         }
 
         return false;
-    }
-
-    /**
-     * Process argument
-     *
-     * @param array $argv
-     */
-    protected function processArguments($argv) {
-        if (count($argv) < 2) {
-            $this->action = 'bench';
-            return;
-        }
-        switch ($argv[1]) {
-            case 'bench':
-            case 'gen':
-            case 'test':
-                $this->action = $argv[1];
-                break;
-            default:
-                throw new \Exception("Unknown action {$argv[1]}");
-        }
-        if (isset($argv[2]) && ($argv[2] === '-f' || $argv[2] === '--force')) {
-            $this->force = true;
-            $offset = 3;
-        } else {
-            $offset = 2;
-        }
-        if (count($argv) < 3) {
-            return;
-        }
-        $this->whiteList = array_splice($argv, $offset);
     }
 }

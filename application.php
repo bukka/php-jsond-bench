@@ -16,7 +16,7 @@ $benchDir = __DIR__ . "/bench/";
 $confDir = __DIR__ . "/conf/";
 $confFile = $confDir . "bench.json";
 
-$conf = new Conf(null, $confFile, $templateDir, $outputDir, $benchDir, $storageDir);
+$conf = new Conf($confFile, $templateDir, $outputDir, $benchDir, $storageDir);
 
 $checkCommand = new CheckCommand($conf);
 $genCommand = new GenCommand($conf);

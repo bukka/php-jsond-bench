@@ -1,32 +1,9 @@
-#!/usr/bin/env php
-<?php
+#!/bin/sh
 
-require_once __DIR__ . '/vendor/autoload.php';
-
-use Bukka\Jsond\Bench\Conf\Conf;
-use Bukka\Jsond\Bench\Action\RunAction;
-use Bukka\Jsond\Bench\Action\CheckAction;
-use Bukka\Jsond\Bench\Action\GenAction;
-
-$templateDir = __DIR__ . "/templates/";
-$outputDir = __DIR__ . "/output/";
-$storageDir = __DIR__ . "/results/";
-$benchDir = __DIR__ . "/bench/";
-$confDir = __DIR__ . "/conf/";
-$confFile = $confDir . "bench.json";
-
-try {
-    $conf = new Conf($argv, $confFile, $templateDir, $outputDir, $benchDir, $storageDir);
-
-    if ($conf->isGen()) {
-        array_shift($argv);
-        $action = new GenAction($conf);
-    } elseif ($conf->isTest()) {
-        $action = new CheckAction($conf);
-    } else {
-        $action = new RunAction($conf);
-    }
-    $action->execute();
-} catch (\Exception $e) {
-    echo $e->getMessage() . "\n";
-}
+# set base directory
+if readlink ${BASH_SOURCE[0]} > /dev/null; then
+  app_base="$( dirname "$( readlink ${BASH_SOURCE[0]} )" )"
+else
+  app_base="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+fi
+php $app_base/application.php $@
