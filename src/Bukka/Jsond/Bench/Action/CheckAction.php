@@ -31,7 +31,7 @@ class CheckAction extends AbstractAction
                 }
             }
         } elseif ($this->conf->isWhiteListed($path, false)) {
-            $this->testFile($path);
+            $this->checkFile($path);
         }
     }
 
@@ -40,26 +40,26 @@ class CheckAction extends AbstractAction
      *
      * @param string $path
      */
-    protected function testFile($path) {
+    protected function checkFile($path) {
         printf("FILE: %s\n", $path);
         $string = file_get_contents($path);
         printf("LENGTH: %s\n", strlen($string));
         // Decoding
-        $decodeTestResult = $this->testDecode($string);
+        $decodeTestResult = $this->checkDecode($string);
         printf("DECODING: %s\n", $decodeTestResult);
         // Encoding
-        $encodeTestResult = $this->testEncode(json_decode($string));
+        $encodeTestResult = $this->checkEncode(json_decode($string));
         printf("ENCODING: %s\n\n", $encodeTestResult);
     }
 
     /**
-     * Test decoding
+     * Check decoding
      *
      * @param string $string
      *
      * @return string
      */
-    protected function testDecode($string) {
+    protected function checkDecode($string) {
         $json = json_decode($string);
         $jsond = jsond_decode($string);
         if (is_null($json) && is_null($jsond)) {
@@ -76,13 +76,13 @@ class CheckAction extends AbstractAction
     }
 
     /**
-     * Test encoding
+     * Check encoding
      *
      * @param string $string
      *
      * @return string
      */
-    protected function testEncode($object) {
+    protected function checkEncode($object) {
         $json = json_encode($object);
         $jsond = jsond_encode($object);
         if ($json === $jsond) {
@@ -94,6 +94,7 @@ class CheckAction extends AbstractAction
         if (is_null($jsond)) {
             return 'SE';
         }
-        return 'NN';
+
+        return sprintf('NN len(%d:%d)', strlen($json), strlen($jsond));
     }
 }
