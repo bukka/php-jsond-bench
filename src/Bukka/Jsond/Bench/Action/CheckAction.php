@@ -94,7 +94,27 @@ class CheckAction extends AbstractAction
         if (is_null($jsond)) {
             return 'SE';
         }
+        list($diffPos, $diffNear) = $this->findStringDifference($json, $jsond);
+        return sprintf('NN len(%d:%d), diff(%d,"%s")',
+                strlen($json), strlen($jsond), $diffPos, $diffNear);
+    }
 
-        return sprintf('NN len(%d:%d)', strlen($json), strlen($jsond));
+    /**
+     * Find string difference
+     *
+     * @param string $s1
+     * @param string $s2
+     * @param int    $len
+     *
+     * @return array
+     */
+    protected function findStringDifference($s1, $s2, $len = 10) {
+        $count = min(strlen($s1), strlen($s2));
+        for ($i = 0; $i < $count; $i++) {
+            if ($s1[$i] !== $s2[$i]) {
+                break;
+            }
+        }
+        return array($i, substr($s1, max(0, $i - $len), min($len, $i)));
     }
 }
