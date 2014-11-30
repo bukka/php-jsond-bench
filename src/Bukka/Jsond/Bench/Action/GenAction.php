@@ -97,7 +97,7 @@ class GenAction extends AbstractAction
         $pattern = substr($output, 0, strlen($output) - 5) .  '__*';
         foreach (glob($pattern) as $path) {
             if ($force || !in_array($path, $newFilePaths)) {
-                echo "unlink " . $path . "\n";
+                $this->writeln("unlink " . $path);
                 unlink($path);
             }
         }

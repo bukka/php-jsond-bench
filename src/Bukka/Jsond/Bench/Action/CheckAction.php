@@ -41,15 +41,15 @@ class CheckAction extends AbstractAction
      * @param string $path
      */
     protected function checkFile($path) {
-        printf("FILE: %s\n", $path);
+        $this->printf("FILE: %s\n", $path);
         $string = file_get_contents($path);
-        printf("LENGTH: %s\n", strlen($string));
+        $this->printf("LENGTH: %s\n", strlen($string));
         // Decoding
         $decodeTestResult = $this->checkDecode($string);
-        printf("DECODING: %s\n", $decodeTestResult);
+        $this->printf("DECODING: %s\n", $decodeTestResult);
         // Encoding
         $encodeTestResult = $this->checkEncode(json_decode($string));
-        printf("ENCODING: %s\n\n", $encodeTestResult);
+        $this->printf("ENCODING: %s\n\n", $encodeTestResult);
     }
 
     /**

@@ -4,6 +4,8 @@ namespace Bukka\Jsond\Bench\Action;
 
 use Bukka\Jsond\Bench\Conf\Conf;
 
+use Symfony\Component\Console\Output\OutputInterface;
+
 /**
  * Benchmark run class
  */
@@ -19,10 +21,11 @@ class RunAction extends AbstractAction
     /**
      * Constructor
      *
-     * @param Conf $conf
+     * @param Conf            $conf
+     * @param OutputInterface $output
      */
-    public function __construct(Conf $conf) {
-        parent::__construct($conf);
+    public function __construct(Conf $conf, OutputInterface $output) {
+        parent::__construct($conf, $output);
         $this->storage = $conf->getStorage();
     }
 
@@ -69,11 +72,11 @@ class RunAction extends AbstractAction
      * @param int $loops
      */
     protected function benchFile($path, $loops) {
-        printf("FILE: %s\n", $path);
+        $this->printf("FILE: %s\n", $path);
         // Decoding
         $jsonDecodeTime = $this->bench('json/decode', $path, $loops);
         $jsondDecodeTime = $this->bench('jsond/decode', $path, $loops);
-        printf("DECODING json: %s :: jsond: %s\n",
+        $this->printf("DECODING json: %s :: jsond: %s\n",
                 $jsonDecodeTime, $jsondDecodeTime);
         $this->storage->save($path, 'decode', $loops, array(
             'json' => $jsonDecodeTime,
@@ -82,7 +85,7 @@ class RunAction extends AbstractAction
         // Encoding
         $jsonEncodeTime = $this->bench('json/encode', $path, $loops);
         $jsondEncodeTime = $this->bench('jsond/encode', $path, $loops);
-        printf("ENCODING: json: %s :: jsond: %s\n\n",
+        $this->printf("ENCODING: json: %s :: jsond: %s\n\n",
                 $jsonEncodeTime, $jsondEncodeTime);
         $this->storage->save($path, 'encode', $loops, array(
             'json' => $jsonEncodeTime,
