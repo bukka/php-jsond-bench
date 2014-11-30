@@ -69,7 +69,7 @@ class GenCommand extends Command
             $this->conf->enableForce();
         }
         // create action
-        $action = new GenAction($this->conf);
+        $action = new GenAction($this->conf, $output);
         $action->execute();
     }
 }

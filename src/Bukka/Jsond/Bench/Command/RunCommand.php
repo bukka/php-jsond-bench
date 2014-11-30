@@ -59,7 +59,7 @@ class RunCommand extends Command
     {
         $this->conf->setWhiteList($input->getArgument('whiteList'));
         // create action
-        $action = new RunAction($this->conf);
+        $action = new RunAction($this->conf, $output);
         $action->execute();
     }
 }

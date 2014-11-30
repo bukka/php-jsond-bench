@@ -59,7 +59,7 @@ class CheckCommand extends Command
     {
         $this->conf->setWhiteList($input->getArgument('whiteList'));
         // create action
-        $action = new CheckAction($this->conf);
+        $action = new CheckAction($this->conf, $output);
         $action->execute();
     }
 }
