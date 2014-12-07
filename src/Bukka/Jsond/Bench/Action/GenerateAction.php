@@ -5,7 +5,7 @@ namespace Bukka\Jsond\Bench\Action;
 /**
  * Generator action
  */
-class GenAction extends AbstractAction
+class GenerateAction extends AbstractAction
 {
     /**
      * Generate templates
@@ -49,7 +49,6 @@ class GenAction extends AbstractAction
                 foreach ($filePaths as $path) {
                     if (!file_exists($path)) {
                         $cmd = sprintf("%s %s -o %s -s %d", $this->conf->getGenerator(), $input, $path, $seedValue++);
-                        echo $cmd . "\n";
                         system($cmd);
                     }
                 }

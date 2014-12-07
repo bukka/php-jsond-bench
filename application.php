@@ -3,7 +3,7 @@
 require_once __DIR__ . '/vendor/autoload.php';
 
 use Bukka\Jsond\Bench\Command\CheckCommand;
-use Bukka\Jsond\Bench\Command\GenCommand;
+use Bukka\Jsond\Bench\Command\GenerateCommand;
 use Bukka\Jsond\Bench\Command\RunCommand;
 use Bukka\Jsond\Bench\Conf\Conf;
 
@@ -19,11 +19,11 @@ $confFile = $confDir . "bench.json";
 $conf = new Conf($confFile, $templateDir, $outputDir, $benchDir, $storageDir);
 
 $checkCommand = new CheckCommand($conf);
-$genCommand = new GenCommand($conf);
+$generateCommand = new GenerateCommand($conf);
 $runCommand = new RunCommand($conf);
 
 $application = new Application();
 $application->add($checkCommand);
-$application->add($genCommand);
+$application->add($generateCommand);
 $application->add($runCommand);
 $application->run();

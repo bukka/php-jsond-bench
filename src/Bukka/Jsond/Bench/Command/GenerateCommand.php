@@ -3,7 +3,7 @@
 namespace Bukka\Jsond\Bench\Command;
 
 use Bukka\Jsond\Bench\Conf\Conf;
-use Bukka\Jsond\Bench\Action\GenAction;
+use Bukka\Jsond\Bench\Action\GenerateAction;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -14,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Gen command
  */
-class GenCommand extends Command
+class GenerateCommand extends Command
 {
     /**
      * Main configuration
@@ -40,7 +40,7 @@ class GenCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('gen')
+            ->setName('generate')
             ->setDescription('Generate the output instances')
             ->addArgument(
                 'whiteList',
@@ -69,7 +69,7 @@ class GenCommand extends Command
             $this->conf->enableForce();
         }
         // create action
-        $action = new GenAction($this->conf, $output);
+        $action = new GenerateAction($this->conf, $output);
         $action->execute();
     }
 }
