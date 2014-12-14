@@ -79,6 +79,13 @@ class Conf
      */
     protected $whiteList = false;
 
+    /**
+     * Parameters
+     *
+     * @var array
+     */
+    protected $params = array();
+
 
     /**
      * Constructor
@@ -298,5 +305,45 @@ class Conf
         }
 
         return false;
+    }
+
+    /**
+     * Set parameters
+     *
+     * @param array $params
+     *
+     * @return Conf
+     */
+    public function setParams(array $params)
+    {
+        $this->params = $params;
+
+        return $this;
+    }
+
+    /**
+     * Set parameter
+     *
+     * @param array $params
+     *
+     * @return Conf
+     */
+    public function setParam($name, $value)
+    {
+        $this->params[$name] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Set parameter
+     *
+     * @param array $params
+     *
+     * @return Conf
+     */
+    public function getParam($name, $default = null)
+    {
+        return isset($this->params[$name]) ? $this->params[$name] : $default;
     }
 }
