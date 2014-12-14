@@ -49,7 +49,7 @@ class GenerateCommand extends Command
             )
             ->addOption(
                'force',
-               null,
+               'f',
                InputOption::VALUE_NONE,
                'Whether to force generation'
             )
