@@ -2,10 +2,10 @@
 	"generator": "jsogen",
     "storage": "file",
 	"sizes": {
-		"huge":   { "count": 1, "loops": 100 },
-		"big":    { "count": 3, "loops": 1000 },
-		"medium": { "count": 3, "loops": 10000 },
-		"small":  { "count": 3, "loops": 100000 },
+		"huge":   { "count": 1, "loops": 50 },
+		"big":    { "count": 3, "loops": 500 },
+		"medium": { "count": 3, "loops": 5000 },
+		"small":  { "count": 3, "loops": 50000 },
 		"tiny":   { "count": 3, "loops": 500000 }
 	}
 }
