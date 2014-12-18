@@ -1,0 +1,7 @@
+{
+    "{{repeat(7, 9)}}": true,
+	"k1": {
+        "{{repeat(4)}}": true,
+        "k2": "{{string(3)}}"
+    }
+}

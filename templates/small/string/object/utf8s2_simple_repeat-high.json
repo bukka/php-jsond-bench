@@ -1,0 +1,4 @@
+{
+    "{{repeat(20, 25)}}": true,
+	"k": "{{string(1, 4, kind='utf8_2')}}"
+}
