@@ -45,6 +45,27 @@ class ViewAction extends AbstractAction
      */
     protected function loadDate($date = null)
     {
+        $elements = explode(':', $date);
+        $file = $this->getDateFile($elements[0]);
+        $aliases = array();
+        if (count($elements) > 1) {
+            foreach (explode(';', $elements[1]) as $alias) {
+                if (strpos($alias, '=') !== false) {
+                    list($aliasTarget, $aliasSource) = explode('=', $alias, 2);
+                    $aliases[$aliasSource] = $aliasTarget;
+                }
+            }
+        }
+        $this->saveData($file, $aliases);
+    }
+
+    protected function getDateFile($dateName)
+    {
+
+    }
+
+    protected function saveData($file, $aliases)
+    {
 
     }
 }
