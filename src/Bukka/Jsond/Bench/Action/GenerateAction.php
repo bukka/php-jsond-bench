@@ -2,6 +2,8 @@
 
 namespace Bukka\Jsond\Bench\Action;
 
+use Bukka\Jsond\Bench\Util\DirectorySortedIterator;
+
 /**
  * Generator action
  */
@@ -35,11 +37,9 @@ class GenerateAction extends AbstractAction
             if (!is_dir($output) && !mkdir($output)) {
                 throw new Exception("Creating directory failed");
             }
-            foreach (new \DirectoryIterator($input) as $fileInfo) {
-                if (!$fileInfo->isDot()) {
-                    $fname = $fileInfo->getFilename();
-                    $this->executeSize("$input/$fname", "$output/$fname", $count, $seed);
-                }
+            foreach (new DirectorySortedIterator($input) as $fileInfo) {
+                $fname = $fileInfo->getFilename();
+                $this->executeSize("$input/$fname", "$output/$fname", $count, $seed);
             }
         } elseif ($this->conf->isWhiteListed($input, true)) {
             $filePaths = $this->createPaths($output, $seed, $count);

@@ -6,7 +6,6 @@
 - Regenerate modified files
 
 ### Bench
-- run instances alphabetically
 - process numbers and print summary results
 
 ### Checker

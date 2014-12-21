@@ -3,7 +3,7 @@
 namespace Bukka\Jsond\Bench\Action;
 
 use Bukka\Jsond\Bench\Conf\Conf;
-
+use Bukka\Jsond\Bench\Util\DirectorySortedIterator;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -54,11 +54,9 @@ class RunAction extends AbstractAction
      */
     protected function executeSize($path, $loops) {
         if (is_dir($path)) {
-            foreach (new \DirectoryIterator($path) as $fileInfo) {
-                if (!$fileInfo->isDot()) {
-                    $fname = $fileInfo->getFilename();
-                    $this->executeSize("$path/$fname", $loops);
-                }
+            foreach (new DirectorySortedIterator($path) as $fileInfo) {
+                $fname = $fileInfo->getFilename();
+                $this->executeSize("$path/$fname", $loops);
             }
         } elseif ($this->conf->isWhiteListed($path, false)) {
             $this->benchFile($path, $loops);
