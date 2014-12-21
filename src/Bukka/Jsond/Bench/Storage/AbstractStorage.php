@@ -39,6 +39,13 @@ abstract class AbstractStorage implements StorageInterface
     abstract public function flush();
 
     /**
+     * Load stored data
+     *
+     * @return array
+     */
+    abstract public function load($date = 'latest');
+
+    /**
      * Save parse run record
      *
      * @param array $record Record to save

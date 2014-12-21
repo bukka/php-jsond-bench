@@ -47,6 +47,17 @@ class FileStorage extends AbstractStorage
         file_put_contents($filePath, json_encode($this->records));
     }
 
+
+    /**
+     * Load stored data
+     *
+     * @return array
+     */
+    public function load($date = 'latest')
+    {
+
+    }
+
     /**
      * Save parse run record
      *

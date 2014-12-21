@@ -23,6 +23,13 @@ interface StorageInterface
     public function flush();
 
     /**
+     * Load stored data
+     *
+     * @return array
+     */
+    public function load($date = 'latest');
+
+    /**
      * Save run
      *
      * @param string $path   Measured file path
