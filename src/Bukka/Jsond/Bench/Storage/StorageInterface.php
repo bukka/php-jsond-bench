@@ -27,7 +27,7 @@ interface StorageInterface
      *
      * @return array
      */
-    public function load($date = 'latest');
+    public function load($dateTime = 'latest');
 
     /**
      * Save run

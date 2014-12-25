@@ -41,9 +41,11 @@ abstract class AbstractStorage implements StorageInterface
     /**
      * Load stored data
      *
+     * @param mixed $dateTime Date time for loaded instance
+     *
      * @return array
      */
-    abstract public function load($date = 'latest');
+    abstract public function load($dateTime = 'latest');
 
     /**
      * Save parse run record

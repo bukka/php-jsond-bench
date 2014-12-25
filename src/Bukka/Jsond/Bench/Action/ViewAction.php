@@ -46,7 +46,10 @@ class ViewAction extends AbstractAction
     protected function loadDate($date = null)
     {
         $elements = explode(':', $date);
-        $file = $this->getDateFile($elements[0]);
+        $fileData = $this->getData($elements[0]);
+        if (is_null($fileData)) {
+            throw new \Exception('No data for ' . $elements[0]);
+        }
         $aliases = array();
         if (count($elements) > 1) {
             foreach (explode(';', $elements[1]) as $alias) {
@@ -56,14 +59,27 @@ class ViewAction extends AbstractAction
                 }
             }
         }
-        $this->saveData($file, $aliases);
+        $this->saveData($fileData, $aliases);
     }
 
-    protected function getDateFile($dateName)
+    /**
+     * Get data for dateTime
+     *
+     * @param string $dateTime
+     *
+     * @return array
+     */
+    protected function getData($dateTime)
     {
-
+        return $this->conf->getStorage()->load($dateTime);
     }
 
+    /**
+     * Save localy data
+     *
+     * @param array $fileData
+     * @param array $aliases
+     */
     protected function saveData($file, $aliases)
     {
 

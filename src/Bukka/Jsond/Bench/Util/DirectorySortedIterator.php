@@ -23,6 +23,10 @@ class DirectorySortedIterator implements \IteratorAggregate, \Countable
     {
         $dirs = array();
 
+        if ($directory instanceof \SplFileInfo) {
+            $directory = $directory->getPathname();
+        }
+
         foreach (new \DirectoryIterator($directory) as $fileInfo) {
             if (!$fileInfo->isDot()) {
                 $dirs[$fileInfo->getFilename()] = clone $fileInfo;
