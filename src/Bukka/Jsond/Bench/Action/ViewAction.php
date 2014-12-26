@@ -80,8 +80,11 @@ class ViewAction extends AbstractAction
      * @param array $fileData
      * @param array $aliases
      */
-    protected function saveData($file, $aliases)
+    protected function saveData($fileData, $aliases)
     {
-
+        foreach ($fileData as $record) {
+            $c = $record->category;
+            // $this->data[$c->size][$c->type][$c->org][$cat->idx];
+        }
     }
 }

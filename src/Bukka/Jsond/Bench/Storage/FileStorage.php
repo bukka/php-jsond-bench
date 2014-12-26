@@ -46,7 +46,7 @@ class FileStorage extends AbstractStorage
     protected function getResultPathFromDate($dateTime, $dirOnly = false)
     {
         if (!$dateTime instanceof \DateTime) {
-            $dateTime = new \DateTime($dateTime);
+            $dateTime = new \DateTime(preg_replace("'/[^0-9:-]/", '', $dateTime));
         }
 
         $dirPath = $this->conf->getStorageDir() . $dateTime->format("Ymd/His");
@@ -107,7 +107,7 @@ class FileStorage extends AbstractStorage
             throw new \Exception("Creating dir $dirPath failed");
         }
         $filePath = $this->getResultFileName($dirPath);
-        file_put_contents($filePath, json_encode($this->records));
+        file_put_contents($filePath, json_encode($this->records, JSON_PRETTY_PRINT));
     }
 
 
@@ -127,7 +127,7 @@ class FileStorage extends AbstractStorage
             return null;
         }
 
-        return json_decode(file_get_contents($path), true);
+        return json_decode(file_get_contents($path));
     }
 
     /**

@@ -25,6 +25,8 @@ interface StorageInterface
     /**
      * Load stored data
      *
+     * @param mixed $dateTime Date time for loaded instance
+     *
      * @return array
      */
     public function load($dateTime = 'latest');

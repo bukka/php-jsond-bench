@@ -66,16 +66,19 @@ abstract class AbstractStorage implements StorageInterface
     {
         $dirCat = explode('/', substr(dirname($path), strlen($this->conf->getOutputDir())));
         $fileName = basename($path);
-        $fileCat = substr($fileName, 0, strpos($fileName, '__'));
+        $idxSepPos = strpos($fileName, '__');
+        $fileCat = substr($fileName, 0, $idxSepPos);
+        $idx = (int) substr($fileName, $idxSepPos + 2);
         $record = array(
             'action'   => $action,
             'loops'    => $loops,
             'runs'     => $runs,
             'category' => array(
-                'size'      => $dirCat[0],
-                'type'      => $dirCat[1],
-                'structure' => $dirCat[2],
-                'name'      => $fileCat,
+                'size' => $dirCat[0],
+                'type' => $dirCat[1],
+                'org'  => $dirCat[2],
+                'name' => $fileCat,
+                'idx'  => $idx,
             ),
         );
         $this->saveRecord($record);
