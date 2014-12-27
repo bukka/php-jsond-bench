@@ -2,6 +2,9 @@
 
 namespace Bukka\Jsond\Bench\Action;
 
+use Bukka\Jsond\Bench\Exception\ActionException;
+use Bukka\Jsond\Bench\Stat\Item;
+
 /**
  * View action
  */
@@ -19,6 +22,7 @@ class ViewAction extends AbstractAction
      */
     public function execute() {
         $this->loadDates();
+        var_dump($this->data);
     }
 
     /**
@@ -41,14 +45,16 @@ class ViewAction extends AbstractAction
     /**
      * Load single date
      *
-     * @param string $date
+     * @param mixed $date
+     *
+     * @throws ActionException
      */
     protected function loadDate($date = null)
     {
         $elements = explode(':', $date);
         $fileData = $this->getData($elements[0]);
         if (is_null($fileData)) {
-            throw new \Exception('No data for ' . $elements[0]);
+            throw new ActionException('No data for ' . $elements[0]);
         }
         $aliases = array();
         if (count($elements) > 1) {
@@ -75,7 +81,7 @@ class ViewAction extends AbstractAction
     }
 
     /**
-     * Save localy data
+     * Save locally data
      *
      * @param array $fileData
      * @param array $aliases
@@ -84,7 +90,11 @@ class ViewAction extends AbstractAction
     {
         foreach ($fileData as $record) {
             $c = $record->category;
-            // $this->data[$c->size][$c->type][$c->org][$cat->idx];
+            if (isset($this->data[$record->action][$c->size][$c->type][$c->org][$c->idx])) {
+                $this->data[$record->action][$c->size][$c->type][$c->org][$c->idx]->addRuns($record->runs, $aliases);
+            } else {
+                $this->data[$record->action][$c->size][$c->type][$c->org][$c->idx] = new Item($record, $aliases);
+            }
         }
     }
 }

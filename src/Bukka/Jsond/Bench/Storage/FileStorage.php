@@ -28,6 +28,8 @@ class FileStorage extends AbstractStorage
      * Return result file name from dir
      *
      * @param string $dirPath
+     *
+     * @return string
      */
     protected function getResultFileName($dirPath)
     {
