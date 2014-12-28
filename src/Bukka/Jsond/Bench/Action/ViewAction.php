@@ -22,7 +22,7 @@ class ViewAction extends AbstractAction
      */
     public function execute() {
         $this->loadDates();
-        var_dump($this->data);
+        $this->processData();
     }
 
     /**
@@ -65,7 +65,7 @@ class ViewAction extends AbstractAction
                 }
             }
         }
-        $this->saveData($fileData, $aliases);
+        $this->setData($fileData, $aliases);
     }
 
     /**
@@ -86,7 +86,7 @@ class ViewAction extends AbstractAction
      * @param array $fileData
      * @param array $aliases
      */
-    protected function saveData($fileData, $aliases)
+    protected function setData($fileData, $aliases)
     {
         foreach ($fileData as $record) {
             $c = $record->category;
@@ -94,6 +94,24 @@ class ViewAction extends AbstractAction
                 $this->data[$record->action][$c->size][$c->type][$c->org][$c->idx]->addRuns($record->runs, $aliases);
             } else {
                 $this->data[$record->action][$c->size][$c->type][$c->org][$c->idx] = new Item($record, $aliases);
+            }
+        }
+    }
+
+    /**
+     * Process data
+     */
+    protected function processData()
+    {
+        foreach ($this->data as $actionName => $sizes) {
+            foreach ($sizes as $sizeName => $types) {
+                foreach ($types as $typeName => $organizations) {
+                    foreach ($organizations as $organizationName => $indexes) {
+                        foreach ($indexes as $indexName => $item) {
+                            var_dump($item);
+                        }
+                    }
+                }
             }
         }
     }
