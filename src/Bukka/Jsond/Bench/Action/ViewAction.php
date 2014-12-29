@@ -107,6 +107,7 @@ class ViewAction extends AbstractAction
             foreach ($sizes as $sizeName => $types) {
                 foreach ($types as $typeName => $organizations) {
                     foreach ($organizations as $organizationName => $indexes) {
+
                         foreach ($indexes as $indexName => $item) {
                             var_dump($item);
                         }

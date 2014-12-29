@@ -2,7 +2,7 @@
 
 namespace Bukka\Jsond\Bench\Stat;
 
-class Item
+class Item implements NodeInterface
 {
     /**
      * @var array
@@ -60,5 +60,67 @@ class Item
         }
     }
 
+    /**
+     * Get total running time
+     *
+     * @param string $name Run name
+     *
+     * @return float
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function getTotalRunTime($name = null)
+    {
+        if (is_null($name)) {
+            return $this->runs;
+        }
+        if (isset($this->runs[$name])) {
+            return $this->runs[$name];
+        }
+        throw new \InvalidArgumentException("No run called $name");
+    }
 
+    /**
+     * Get average running time
+     *
+     * @param string $name Run name
+     *
+     * @return float
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function getAvgRunTime($name = null)
+    {
+        return $this->getTotalRunTime($name);
+    }
+
+    /**
+     * Get run count
+     *
+     * @param mixed $name Run name
+     *
+     * @return integer
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function getRunCount($name = null)
+    {
+        if (is_null($name)) {
+            return array_fill_keys(array_keys($this->runs), 1);
+        }
+        if (isset($this->runs[$name])) {
+            return 1;
+        }
+        throw new \InvalidArgumentException("No run called $name");
+    }
+
+    /**
+     * Get number of loops
+     *
+     * @return integer
+     */
+    public function getLoops()
+    {
+        return $this->loops;
+    }
 }
