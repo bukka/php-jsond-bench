@@ -65,7 +65,7 @@ class Item implements NodeInterface
      *
      * @param string $name Run name
      *
-     * @return float
+     * @return mixed
      *
      * @throws \InvalidArgumentException
      */
@@ -85,7 +85,7 @@ class Item implements NodeInterface
      *
      * @param string $name Run name
      *
-     * @return float
+     * @return mixed
      *
      * @throws \InvalidArgumentException
      */
@@ -99,7 +99,7 @@ class Item implements NodeInterface
      *
      * @param mixed $name Run name
      *
-     * @return integer
+     * @return mixed
      *
      * @throws \InvalidArgumentException
      */

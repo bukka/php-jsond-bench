@@ -14,45 +14,62 @@ class Node implements NodeInterface
     protected $runs;
 
     /**
+    * @var integer
+    */
+    protected $loops = 1;
+
+    /**
      * Cached total number of loops
      *
-     * @var integer
-     */
-    protected $loops;
-
-    /**
-     * cached total run time
-     *
      * @var array
      */
-    protected $totalRunTime;
+    protected $cache = array();
 
     /**
-     * cached total avg time
+     * Get cached run value
      *
-     * @var array
-     */
-    protected $totalAvgTime;
-
-    /**
-     * cached runs count
+     * @param mixed   $name
+     * @param string  $type
+     * @param boolean $average
      *
-     * @var array
+     * @return mixed
+     *
+     * @throws \InvalidArgumentException
      */
-    protected $runsCount;
+    protected function getCachedRunValue($name, $type, $average = false)
+    {
+        if (!isset($this->cache[$type])) {
+            $this->cache[$type] = array();
+            foreach ($this->runs as $runName => $results) {
+                $values = array_map(
+                    function($result) use ($type) { $result->{'get' . $type}(); },
+                    $results
+                );
+                $valuesSum = array_sum($values);
+                $this->cache[$type][$runName] = $average ? $valuesSum / count($values) : $valuesSum;
+            }
+        }
+        if (is_null($name)) {
+            return $this->cache[$type];
+        }
+        if (isset($this->cache[$type][$name])) {
+            return $this->cache[$type][$name];
+        }
+        throw new \InvalidArgumentException("No run called $name");
+    }
 
     /**
      * Get total running time
      *
      * @param mixed $name Run name
      *
-     * @return float
+     * @return mixed
      *
      * @throws \InvalidArgumentException
      */
     public function getTotalRunTime($name = null)
     {
-        // TODO: Implement getTotalRunTime() method.
+        return $this->getCachedRunValue($name, 'TotalRunTime');
     }
 
     /**
@@ -66,7 +83,7 @@ class Node implements NodeInterface
      */
     public function getAvgRunTime($name = null)
     {
-        // TODO: Implement getAvgRunTime() method.
+        return $this->getCachedRunValue($name, 'AvgRunTime');
     }
 
     /**
@@ -80,7 +97,7 @@ class Node implements NodeInterface
      */
     public function getRunCount($name = null)
     {
-        // TODO: Implement getRunCount() method.
+        return $this->getCachedRunValue($name, 'getRunCount');
     }
 
     /**

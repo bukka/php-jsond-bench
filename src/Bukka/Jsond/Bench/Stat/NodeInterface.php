@@ -9,7 +9,7 @@ interface NodeInterface
      *
      * @param mixed $name Run name
      *
-     * @return float
+     * @return mixed
      *
      * @throws \InvalidArgumentException
      */
@@ -20,7 +20,7 @@ interface NodeInterface
      *
      * @param mixed $name Run name
      *
-     * @return float
+     * @return mixed
      *
      * @throws \InvalidArgumentException
      */
@@ -31,7 +31,7 @@ interface NodeInterface
      *
      * @param mixed $name Run name
      *
-     * @return integer
+     * @return mixed
      *
      * @throws \InvalidArgumentException
      */
