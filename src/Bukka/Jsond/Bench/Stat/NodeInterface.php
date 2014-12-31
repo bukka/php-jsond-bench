@@ -40,7 +40,11 @@ interface NodeInterface
     /**
      * Get number of loops
      *
-     * @return integer
+     * @param mixed $name Run name
+     *
+     * @return mixed
+     *
+     * @throws \InvalidArgumentException
      */
-    public function getLoops();
+    public function getLoops($name = null);
 }

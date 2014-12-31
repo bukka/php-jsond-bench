@@ -117,10 +117,19 @@ class Item implements NodeInterface
     /**
      * Get number of loops
      *
-     * @return integer
+     * @param mixed $name Run name
+     *
+     * @return mixed
+     *
+     * @throws \InvalidArgumentException
      */
-    public function getLoops()
+    public function getLoops($name = null)
     {
-        return $this->loops;
+        if (is_null($name)) {
+            return array_fill_keys(array_keys($this->runs), $this->loops);
+        }
+        if (isset($this->runs[$name])) {
+            return $this->loops;
+        }
     }
 }

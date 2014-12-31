@@ -7,16 +7,13 @@ class Node implements NodeInterface
     /**
      * It's formatted as
      * array(
-     *      'json' => array($result1, $result2, $result2)
+     *      'json' => array($result1, $result2, $result2),
+     *      'jsond' => array($result1, $result2, $result2)
+     * )
      *
      * @var array
      */
     protected $runs;
-
-    /**
-    * @var integer
-    */
-    protected $loops = 1;
 
     /**
      * Cached total number of loops
@@ -42,7 +39,7 @@ class Node implements NodeInterface
             $this->cache[$type] = array();
             foreach ($this->runs as $runName => $results) {
                 $values = array_map(
-                    function($result) use ($type) { $result->{'get' . $type}(); },
+                    function($result) use ($type, $runName) { $result->{'get' . $type}($runName); },
                     $results
                 );
                 $valuesSum = array_sum($values);
@@ -77,13 +74,13 @@ class Node implements NodeInterface
      *
      * @param mixed $name Run name
      *
-     * @return float
+     * @return mixed
      *
      * @throws \InvalidArgumentException
      */
     public function getAvgRunTime($name = null)
     {
-        return $this->getCachedRunValue($name, 'AvgRunTime');
+        return $this->getCachedRunValue($name, 'AvgRunTime', true);
     }
 
     /**
@@ -91,24 +88,26 @@ class Node implements NodeInterface
      *
      * @param mixed $name Run name
      *
-     * @return integer
+     * @return mixed
      *
      * @throws \InvalidArgumentException
      */
     public function getRunCount($name = null)
     {
-        return $this->getCachedRunValue($name, 'getRunCount');
+        return $this->getCachedRunValue($name, 'RunCount');
     }
 
     /**
      * Get number of loops
      *
-     * @return integer
+     * @param mixed $name Run name
+     *
+     * @return mixed
+     *
+     * @throws \InvalidArgumentException
      */
-    public function getLoops()
+    public function getLoops($name = null)
     {
-        // TODO: Implement getLoops() method.
+        return $this->getCachedRunValue($name, 'Loops');
     }
-
-
 }
