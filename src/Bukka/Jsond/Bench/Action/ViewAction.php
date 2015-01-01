@@ -4,6 +4,7 @@ namespace Bukka\Jsond\Bench\Action;
 
 use Bukka\Jsond\Bench\Exception\ActionException;
 use Bukka\Jsond\Bench\Stat\Item;
+use Bukka\Jsond\Bench\Stat\Node;
 
 /**
  * View action
@@ -16,6 +17,13 @@ class ViewAction extends AbstractAction
      * @var array
      */
     protected $data;
+
+    /**
+     * Results for encoding and decoding
+     *
+     * @var array
+     */
+    protected $results;
 
     /**
      * Execute viewing of results
@@ -104,16 +112,25 @@ class ViewAction extends AbstractAction
     protected function processData()
     {
         foreach ($this->data as $actionName => $sizes) {
+            $actionNode = new Node();
             foreach ($sizes as $sizeName => $types) {
+                $sizeNode = new Node();
                 foreach ($types as $typeName => $organizations) {
+                    $typeNode = new Node();
                     foreach ($organizations as $organizationName => $indexes) {
-
+                        $organizationNode = new Node();
                         foreach ($indexes as $indexName => $item) {
-                            var_dump($item);
+                            $organizationNode->addChild($item);
                         }
+                        $typeNode->addChild($organizationNode);
                     }
+                    $sizeNode->addChild($typeNode);
                 }
+                $actionNode->addChild($sizeNode);
             }
+            $this->results[$actionName] = $actionNode;
+            echo strtoupper($actionName) . "\n";
+            print_r($actionNode->getAvgRunTime());
         }
     }
 }

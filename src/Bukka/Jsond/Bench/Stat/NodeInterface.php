@@ -5,6 +5,13 @@ namespace Bukka\Jsond\Bench\Stat;
 interface NodeInterface
 {
     /**
+     * Get names of all runs
+     *
+     * @return array
+     */
+    public function getRunNames();
+
+    /**
      * Get total running time
      *
      * @param mixed $name Run name

@@ -61,6 +61,16 @@ class Item implements NodeInterface
     }
 
     /**
+     * Get names of all runs
+     *
+     * @return array
+     */
+    public function getRunNames()
+    {
+        return array_keys($this->runs);
+    }
+
+    /**
      * Get total running time
      *
      * @param string $name Run name

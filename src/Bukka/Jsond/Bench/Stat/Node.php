@@ -23,6 +23,26 @@ class Node implements NodeInterface
     protected $cache = array();
 
     /**
+     * @param NodeInterface $child
+     */
+    public function addChild(NodeInterface $child)
+    {
+        foreach ($child->getRunNames() as $name) {
+            $this->runs[$name][] = $child;
+        }
+    }
+
+    /**
+     * Get names of all runs
+     *
+     * @return array
+     */
+    public function getRunNames()
+    {
+        return array_keys($this->runs);
+    }
+
+    /**
      * Get cached run value
      *
      * @param mixed   $name
@@ -39,7 +59,7 @@ class Node implements NodeInterface
             $this->cache[$type] = array();
             foreach ($this->runs as $runName => $results) {
                 $values = array_map(
-                    function($result) use ($type, $runName) { $result->{'get' . $type}($runName); },
+                    function($result) use ($type, $runName) { return $result->{'get' . $type}($runName); },
                     $results
                 );
                 $valuesSum = array_sum($values);
