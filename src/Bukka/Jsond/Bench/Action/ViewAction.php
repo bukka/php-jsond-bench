@@ -101,7 +101,7 @@ class ViewAction extends AbstractAction
             if (isset($this->data[$record->action][$c->size][$c->type][$c->org][$c->idx])) {
                 $this->data[$record->action][$c->size][$c->type][$c->org][$c->idx]->addRuns($record->runs, $aliases);
             } else {
-                $this->data[$record->action][$c->size][$c->type][$c->org][$c->idx] = new Item($record, $aliases);
+                $this->data[$record->action][$c->size][$c->type][$c->org][$c->idx] = new Item($record, $aliases, $c);
             }
         }
     }

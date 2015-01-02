@@ -54,4 +54,11 @@ interface NodeInterface
      * @throws \InvalidArgumentException
      */
     public function getLoops($name = null);
+
+    /**
+     * Get levels
+     *
+     * @return mixed
+     */
+    public function getLevels();
 }

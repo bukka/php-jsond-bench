@@ -15,17 +15,51 @@ class Item implements NodeInterface
     protected $loops = 1;
 
     /**
+     * @var array
+     */
+    protected $levels = array();
+
+    /**
      * Constructor
      *
      * @param mixed $storageRecord
      * @param array $runAliases
+     * @param mixed $category
      */
-    public function __construct($storageRecord = null, array $runAliases = array())
+    public function __construct($storageRecord = null, array $runAliases = array(), $category = null)
     {
         if ($storageRecord) {
             $this->addRuns($storageRecord->runs, $runAliases);
             $this->setLoops($storageRecord->loops);
         }
+        if ($category) {
+            $this->setLevelsFromCategory($category);
+        }
+    }
+
+    /**
+     * Set levels from category
+     *
+     * @param object $category
+     */
+    public function setLevelsFromCategory($category)
+    {
+        $this->levels = array(
+            $category->idx,
+            $category->org,
+            $category->type,
+            $category->size,
+        );
+    }
+
+    /**
+     * Get levels
+     *
+     * @return mixed
+     */
+    public function getLevels()
+    {
+        return $this->levels;
     }
 
     /**

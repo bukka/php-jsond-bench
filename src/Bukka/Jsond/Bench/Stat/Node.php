@@ -16,6 +16,11 @@ class Node implements NodeInterface
     protected $runs;
 
     /**
+     * @var array
+     */
+    protected $levels;
+
+    /**
      * Cached total number of loops
      *
      * @var array
@@ -27,6 +32,11 @@ class Node implements NodeInterface
      */
     public function addChild(NodeInterface $child)
     {
+        if (is_null($this->levels)) {
+            $childLevels = $child->getLevels();
+            $this->levels = (is_array($childLevels) && count($childLevels) > 1) ?
+                array_slice($childLevels, 1) : array();
+        }
         foreach ($child->getRunNames() as $name) {
             $this->runs[$name][] = $child;
         }
@@ -129,5 +139,15 @@ class Node implements NodeInterface
     public function getLoops($name = null)
     {
         return $this->getCachedRunValue($name, 'Loops');
+    }
+
+    /**
+     * Get levels
+     *
+     * @return mixed
+     */
+    public function getLevels()
+    {
+        return $this->levels;
     }
 }
