@@ -3,8 +3,7 @@
 namespace Bukka\Jsond\Bench\Action;
 
 use Bukka\Jsond\Bench\Conf\Conf;
-
-use Symfony\Component\Console\Output\OutputInterface;
+use Bukka\Jsond\Bench\Writer\WriterInterface;
 
 /**
  * Templates checking class
@@ -19,21 +18,22 @@ abstract class AbstractAction
     protected $conf;
 
     /**
+     * Writer
      *
-     * @var OutputInterface
+     * @var WriterInterface
      */
-    protected $output;
+    protected $writer;
 
     /**
      * Constructor
      *
      * @param Conf            $conf
-     * @param OutputInterface $output
+     * @param WriterInterface $writer
      */
-    public function __construct(Conf $conf, OutputInterface $output)
+    public function __construct(Conf $conf, WriterInterface $writer)
     {
         $this->conf = $conf;
-        $this->output = $output;
+        $this->writer = $writer;
     }
 
     /**
@@ -43,7 +43,7 @@ abstract class AbstractAction
      */
     protected function write($messages)
     {
-        $this->output->write($messages);
+        $this->writer->write($messages);
     }
 
     /**
@@ -53,7 +53,7 @@ abstract class AbstractAction
      */
     protected function writeln($messages)
     {
-        $this->output->writeln($messages);
+        $this->writer->writeLine($messages);
     }
 
     /**
@@ -61,7 +61,7 @@ abstract class AbstractAction
      */
     protected function printf()
     {
-        $this->write(call_user_func_array("sprintf", func_get_args()));
+        $this->writer->format(call_user_func_array("sprintf", func_get_args()));
     }
 
     /**

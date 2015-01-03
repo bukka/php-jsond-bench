@@ -4,7 +4,7 @@ namespace Bukka\Jsond\Bench\Action;
 
 use Bukka\Jsond\Bench\Conf\Conf;
 use Bukka\Jsond\Bench\Util\DirectorySortedIterator;
-use Symfony\Component\Console\Output\OutputInterface;
+use Bukka\Jsond\Bench\Writer\WriterInterface;
 
 /**
  * Benchmark run class
@@ -14,7 +14,7 @@ class RunAction extends AbstractAction
     /**
      * Storage
      *
-     * @var\Bukka\Jsond\Bench\Storage\StorageInterface
+     * @var \Bukka\Jsond\Bench\Storage\StorageInterface
      */
     protected $storage;
 
@@ -22,10 +22,10 @@ class RunAction extends AbstractAction
      * Constructor
      *
      * @param Conf            $conf
-     * @param OutputInterface $output
+     * @param WriterInterface $writer
      */
-    public function __construct(Conf $conf, OutputInterface $output) {
-        parent::__construct($conf, $output);
+    public function __construct(Conf $conf, WriterInterface $writer) {
+        parent::__construct($conf, $writer);
         $this->storage = $conf->getStorage();
     }
 

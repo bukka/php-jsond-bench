@@ -2,10 +2,6 @@
 
 namespace Bukka\Jsond\Bench\Command;
 
-use Bukka\Jsond\Bench\Conf\Conf;
-use Bukka\Jsond\Bench\Action\ViewAction;
-
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -14,26 +10,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * View command for viewing results of benchmarks
  */
-class ViewCommand extends Command
+class ViewCommand extends AbstractCommand
 {
-    /**
-     * Main configuration
-     *
-     * @var Conf
-     */
-    protected $conf;
-
-    /**
-     * Constructor
-     *
-     * @param Conf $conf
-     */
-    public function __construct(Conf $conf, $name = null)
-    {
-        parent::__construct($name);
-        $this->conf = $conf;
-    }
-
     /**
      * Configure command
      */
@@ -61,6 +39,8 @@ class ViewCommand extends Command
      *
      * @param InputInterface  $input
      * @param OutputInterface $output
+     *
+     * @return null
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -69,8 +49,7 @@ class ViewCommand extends Command
         if ($input->hasOption('level')) {
             $this->conf->setParam('level', $input->getOption('level'));
         }
-        // create action
-        $action = new ViewAction($this->conf, $output);
-        $action->execute();
+        // execute action
+        parent::execute($input, $output);
     }
 }
