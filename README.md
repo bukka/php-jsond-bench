@@ -16,6 +16,8 @@ where `command` must be one of the following:
 
 * `gen` - generates instances to the new `output` directory. The following `options` can be supplied:
   * `--force` - rewrites existing files in the output directory
-* `bench` - runs benchmarks in the `output` directory
+* `run` - runs benchmarks in the `output` directory
+* `check` - checks generated benchmarks instances if they are correctly parse and also print some info about them
+* `view` - view results (in progress)
 
 The option `whiteList` specifies list of allowed directories that will be processed (generated/benchmarked). If it's not supplied, all directories will be processed.
