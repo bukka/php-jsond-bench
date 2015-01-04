@@ -2,22 +2,12 @@
 
 namespace Bukka\Jsond\Bench\Stat;
 
-class Item implements NodeInterface
+class Item extends AbstractNode
 {
-    /**
-     * @var array
-     */
-    protected $runs = array();
-
     /**
      * @var integer
      */
     protected $loops = 1;
-
-    /**
-     * @var array
-     */
-    protected $levels = array();
 
     /**
      * Constructor

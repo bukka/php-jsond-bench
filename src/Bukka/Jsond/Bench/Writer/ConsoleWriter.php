@@ -31,11 +31,11 @@ class ConsoleWriter extends AbstractWriter
     /**
      * Write message
      *
-     * @param $message
+     * @param string $message
      *
      * @return null
      */
-    public function write($message)
+    public function write($message = '')
     {
         $this->output->write($this->indent . $message);
     }
@@ -43,11 +43,11 @@ class ConsoleWriter extends AbstractWriter
     /**
      * Write message and NL
      *
-     * @param $message
+     * @param string $message
      *
      * @return null
      */
-    public function writeLine($message)
+    public function writeLine($message = '')
     {
         $this->output->writeln($this->indent . $message);
     }

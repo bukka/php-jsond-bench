@@ -129,8 +129,9 @@ class ViewAction extends AbstractAction
                 $actionNode->addChild($sizeNode);
             }
             $this->results[$actionName] = $actionNode;
-            echo strtoupper($actionName) . "\n";
-            print_r($actionNode->getAvgRunTime());
+            // dump result
+            $this->writeln(strtoupper($actionName));
+            $actionNode->dump($this->writer);
         }
     }
 }

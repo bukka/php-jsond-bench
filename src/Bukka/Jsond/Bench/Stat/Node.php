@@ -2,24 +2,10 @@
 
 namespace Bukka\Jsond\Bench\Stat;
 
-class Node implements NodeInterface
+use Bukka\Jsond\Bench\Writer\WriterInterface;
+
+class Node extends AbstractNode
 {
-    /**
-     * It's formatted as
-     * array(
-     *      'json' => array($result1, $result2, $result2),
-     *      'jsond' => array($result1, $result2, $result2)
-     * )
-     *
-     * @var array
-     */
-    protected $runs;
-
-    /**
-     * @var array
-     */
-    protected $levels;
-
     /**
      * Cached total number of loops
      *
@@ -139,15 +125,5 @@ class Node implements NodeInterface
     public function getLoops($name = null)
     {
         return $this->getCachedRunValue($name, 'Loops');
-    }
-
-    /**
-     * Get levels
-     *
-     * @return mixed
-     */
-    public function getLevels()
-    {
-        return $this->levels;
     }
 }

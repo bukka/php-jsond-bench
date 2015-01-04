@@ -7,20 +7,20 @@ interface WriterInterface
     /**
      * Write message
      *
-     * @param $message
+     * @param string $message
      *
      * @return null
      */
-    public function write($message);
+    public function write($message = '');
 
     /**
      * Write message and NL
      *
-     * @param $message
+     * @param string $message
      *
      * @return null
      */
-    public function writeLine($message);
+    public function writeLine($message = '');
 
     /**
      * Print formatted string
