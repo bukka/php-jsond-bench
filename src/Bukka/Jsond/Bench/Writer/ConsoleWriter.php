@@ -14,6 +14,13 @@ class ConsoleWriter extends AbstractWriter
     protected $output;
 
     /**
+     * Indentation
+     *
+     * @var string
+     */
+    protected $indent = '';
+
+    /**
      * @param OutputInterface $output
      */
     public function __construct(OutputInterface $output)
@@ -30,7 +37,7 @@ class ConsoleWriter extends AbstractWriter
      */
     public function write($message)
     {
-        $this->output->write($message);
+        $this->output->write($this->indent . $message);
     }
 
     /**
@@ -42,6 +49,19 @@ class ConsoleWriter extends AbstractWriter
      */
     public function writeLine($message)
     {
-        $this->output->writeln($message);
+        $this->output->writeln($this->indent . $message);
+    }
+
+    /**
+     * Set level and indent
+     *
+     * @param integer $level
+     *
+     * @return null
+     */
+    public function setLevel($level)
+    {
+        parent::setLevel($level);
+        $this->indent = str_repeat(' ', $level);
     }
 }

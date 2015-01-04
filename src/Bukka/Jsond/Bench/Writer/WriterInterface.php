@@ -39,4 +39,27 @@ interface WriterInterface
      * @return null
      */
     public function formatLine($fmt);
+
+    /**
+     * Set level
+     *
+     * @param integer $level
+     *
+     * @return mixed
+     */
+    public function setLevel($level);
+
+    /**
+     * Increment level
+     *
+     * @return null
+     */
+    public function incLevel();
+
+    /**
+     * Decrement level
+     *
+     * @return null
+     */
+    public function decLevel();
 }
