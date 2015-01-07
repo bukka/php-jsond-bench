@@ -36,6 +36,7 @@ class Item extends AbstractNode
     {
         $this->levels = array(
             $category->idx,
+            $category->name,
             $category->org,
             $category->type,
             $category->size,

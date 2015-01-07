@@ -98,10 +98,10 @@ class ViewAction extends AbstractAction
     {
         foreach ($fileData as $record) {
             $c = $record->category;
-            if (isset($this->data[$record->action][$c->size][$c->type][$c->org][$c->idx])) {
-                $this->data[$record->action][$c->size][$c->type][$c->org][$c->idx]->addRuns($record->runs, $aliases);
+            if (isset($this->data[$record->action][$c->size][$c->type][$c->org][$c->name][$c->idx])) {
+                $this->data[$record->action][$c->size][$c->type][$c->org][$c->name][$c->idx]->addRuns($record->runs, $aliases);
             } else {
-                $this->data[$record->action][$c->size][$c->type][$c->org][$c->idx] = new Item($record, $aliases, $c);
+                $this->data[$record->action][$c->size][$c->type][$c->org][$c->name][$c->idx] = new Item($record, $aliases, $c);
             }
         }
     }
@@ -117,10 +117,14 @@ class ViewAction extends AbstractAction
                 $sizeNode = new Node();
                 foreach ($types as $typeName => $organizations) {
                     $typeNode = new Node();
-                    foreach ($organizations as $organizationName => $indexes) {
+                    foreach ($organizations as $organizationName => $names) {
                         $organizationNode = new Node();
-                        foreach ($indexes as $indexName => $item) {
-                            $organizationNode->addChild($item);
+                        foreach ($names as $namesName => $indexes) {
+                            $nameNode = new Node();
+                            foreach ($indexes as $indexName => $item) {
+                                $nameNode->addChild($item);
+                            }
+                            $organizationNode->addChild($nameNode);
                         }
                         $typeNode->addChild($organizationNode);
                     }
