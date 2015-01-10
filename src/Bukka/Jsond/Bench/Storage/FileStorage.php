@@ -48,7 +48,7 @@ class FileStorage extends AbstractStorage
     protected function getResultPathFromDate($dateTime, $dirOnly = false)
     {
         if (!$dateTime instanceof \DateTime) {
-            $dateTime = new \DateTime(preg_replace("'/[^0-9:-]/", '', $dateTime));
+            $dateTime = new \DateTime(preg_replace("/[^0-9:-]/", '', $dateTime));
         }
 
         $dirPath = $this->conf->getStorageDir() . $dateTime->format("Ymd/His");
@@ -56,7 +56,7 @@ class FileStorage extends AbstractStorage
             return $dirPath;
         }
 
-        $this->getResultFileName($dirPath);
+        return $this->getResultFileName($dirPath);
     }
 
     /**
