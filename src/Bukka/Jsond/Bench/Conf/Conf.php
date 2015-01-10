@@ -346,4 +346,28 @@ class Conf
     {
         return isset($this->params[$name]) ? $this->params[$name] : $default;
     }
+
+    /**
+     * Get run types
+     *
+     * @return array
+     */
+    public function getRunTypes()
+    {
+        $runTypes = array('json');
+        if (extension_loaded('jsond')) {
+            $runTypes[] = 'jsond';
+        }
+        return $runTypes;
+    }
+
+    /**
+     * Get run types
+     *
+     * @return array
+     */
+    public function getRunActions()
+    {
+        return array('encode', 'decode');
+    }
 }

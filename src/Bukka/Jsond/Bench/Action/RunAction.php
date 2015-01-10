@@ -19,6 +19,14 @@ class RunAction extends AbstractAction
     protected $storage;
 
     /**
+     * Storage
+     *
+     * @var \Bukka\Jsond\Bench\Storage\StorageInterface
+     */
+    protected $types;
+
+
+    /**
      * Constructor
      *
      * @param Conf            $conf
@@ -27,6 +35,8 @@ class RunAction extends AbstractAction
     public function __construct(Conf $conf, WriterInterface $writer) {
         parent::__construct($conf, $writer);
         $this->storage = $conf->getStorage();
+        $this->types = $conf->getRunTypes();
+        $this->actions = $conf->getRunActions();
     }
 
     /**
@@ -49,7 +59,7 @@ class RunAction extends AbstractAction
     /**
      * Run benchmark for size
      *
-     * @param string $output
+     * @param string $path
      * @param int    $loops
      */
     protected function executeSize($path, $loops) {
@@ -70,40 +80,47 @@ class RunAction extends AbstractAction
      * @param int $loops
      */
     protected function benchFile($path, $loops) {
-        $this->printf("FILE: %s\n", $path);
-        // Decoding
-        $jsonDecodeTime = $this->bench('json/decode', $path, $loops);
-        $jsondDecodeTime = $this->bench('jsond/decode', $path, $loops);
-        $this->printf("DECODING json: %s :: jsond: %s\n",
-                $jsonDecodeTime, $jsondDecodeTime);
-        $this->storage->save($path, 'decode', $loops, array(
-            'json' => $jsonDecodeTime,
-            'jsond' => $jsondDecodeTime
-        ));
-        // Encoding
-        $jsonEncodeTime = $this->bench('json/encode', $path, $loops);
-        $jsondEncodeTime = $this->bench('jsond/encode', $path, $loops);
-        $this->printf("ENCODING: json: %s :: jsond: %s\n\n",
-                $jsonEncodeTime, $jsondEncodeTime);
-        $this->storage->save($path, 'encode', $loops, array(
-            'json' => $jsonEncodeTime,
-            'jsond' => $jsondEncodeTime
-        ));
+        $this->writer->formatLine("FILE: %s", $path);
+
+        foreach ($this->actions as $action) {
+            $result = array();
+            foreach ($this->types as $type) {
+                $result[$type] = $this->bench($type, $action, $path, $loops);
+            }
+            $this->printBenchInfo($action, $result);
+            $this->storage->save($path, $action, $loops, $result);
+        }
     }
 
     /**
      * Bench file
      *
-     * @param string $name
+     * @param string $type
+     * @param string $action
      * @param string $path
      * @param int    $loops
      *
      * @return float
      */
-    protected function bench($name, $path, $loops) {
-        $bench = $this->conf->getBenchDir() . $name . '.php';
+    protected function bench($type, $action, $path, $loops) {
+        $bench = $this->conf->getBenchDir() . "$type/$action.php";
         $command = "php $bench $path $loops";
         $result = json_decode(exec($command));
         return isset($result->time) ? $result->time : 0;
+    }
+
+
+    /**
+     * Print bench info
+     *
+     * @param string $action
+     * @param array  $results
+     */
+    protected function printBenchInfo($action, $results) {
+        $resultStrings = array();
+        foreach ($results as $type => $result) {
+            $resultStrings[] = sprintf("%s: %.6f", $type, $result);
+        }
+        $this->writer->formatLine(" %s: %s", strtoupper($action), implode(' :: ', $resultStrings));
     }
 }
