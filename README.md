@@ -9,7 +9,7 @@ The console is a script that executes all commands. The main configuration is in
 The script can be run from the shell as
 
 ```
-$ php console command [options] [whiteList]
+$ php console command [options] [args]
 ```
 
 where `command` must be one of the following:
@@ -18,6 +18,18 @@ where `command` must be one of the following:
   * `--force` - rewrites existing files in the output directory
 * `run` - runs benchmarks in the `output` directory
 * `check` - checks generated benchmarks instances if they are correctly parse and also print some info about them
-* `view` - view results (in progress)
+* `view` - view results.
 
-The option `whiteList` specifies list of allowed directories that will be processed (generated/benchmarked). If it's not supplied, all directories will be processed.
+The option `args` specifies list of allowed directories that will be processed (generated/benchmarked) for `gen`, `run` and `check`. If it's not supplied, all directories will be processed.
+
+The view `args` depicts the storage identifiers and possible aliases after colon. The example could be 
+
+```
+$ ./console view 20150110161259 20150110194350:jsond=json
+```
+
+The `json` run from `20150110194350` will be shown in the view as `jsond`
+
+## Reports
+
+The reports of the runs can be found in [reports directory](reports/reports.md)
