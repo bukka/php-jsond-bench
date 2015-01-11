@@ -6,9 +6,9 @@ The runs for this report can be found [here](runs.md).
 
 ### Source Code
 
-The `json` is an original (non-free) PHP 7 json extension at commit bukka/php-src@dbd02ad23bfbe0b0dc703c68774e397fc0a8b1ef
+The `json` is an original (non-free) PHP 7 json extension at commit https://github.com/bukka/php-src/commit/dbd02ad23bfbe0b0dc703c68774e397fc0a8b1ef
 
-The `jsond` is an implementation based on jsond for PHP 7 at commit bukka/php-src@e6fb493e5dbafdad37ba5334c986636342b5d9aa
+The `jsond` is an implementation based on jsond for PHP 7 at commit https://github.com/bukka/php-src/commit/e6fb493e5dbafdad37ba5334c986636342b5d9aa
 
 ### Description
 
