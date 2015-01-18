@@ -31,6 +31,7 @@ class ViewAction extends AbstractAction
     public function execute() {
         $this->loadDates();
         $this->processData();
+        $this->dumpResults();
     }
 
     /**
@@ -107,33 +108,42 @@ class ViewAction extends AbstractAction
     }
 
     /**
+     * Process data nodes
+     *
+     * @param array $nodes
+     *
+     * @return Node
+     */
+    protected function processDataNodes(array $nodes)
+    {
+        $node = new Node();
+        foreach ($nodes as $name => $child) {
+            if (is_array($child)) {
+                $node->addChild($this->processDataNodes($child));
+            } else {
+                $node->addChild($child);
+            }
+        }
+
+        return $node;
+    }
+
+    /**
      * Process data
      */
     protected function processData()
     {
         foreach ($this->data as $actionName => $sizes) {
-            $actionNode = new Node();
-            foreach ($sizes as $sizeName => $types) {
-                $sizeNode = new Node();
-                foreach ($types as $typeName => $organizations) {
-                    $typeNode = new Node();
-                    foreach ($organizations as $organizationName => $names) {
-                        $organizationNode = new Node();
-                        foreach ($names as $namesName => $indexes) {
-                            $nameNode = new Node();
-                            foreach ($indexes as $indexName => $item) {
-                                $nameNode->addChild($item);
-                            }
-                            $organizationNode->addChild($nameNode);
-                        }
-                        $typeNode->addChild($organizationNode);
-                    }
-                    $sizeNode->addChild($typeNode);
-                }
-                $actionNode->addChild($sizeNode);
-            }
-            $this->results[$actionName] = $actionNode;
-            // dump result
+            $this->results[$actionName] = $this->processDataNodes($sizes);
+        }
+    }
+
+    /**
+     * Dump result data
+     */
+    protected function dumpResults()
+    {
+        foreach ($this->results as $actionName => $actionNode) {
             $this->writeln(strtoupper($actionName));
             $actionNode->dump($this->writer);
         }
