@@ -25,6 +25,17 @@ class RunAction extends AbstractAction
      */
     protected $types;
 
+    /**
+     * Actions
+     *
+     * @var array
+     */
+    protected $actions;
+
+    /**
+     * @var boolean
+     */
+    protected $save;
 
     /**
      * Constructor
@@ -37,6 +48,7 @@ class RunAction extends AbstractAction
         $this->storage = $conf->getStorage();
         $this->types = $conf->getRunTypes();
         $this->actions = $conf->getRunActions();
+        $this->save = $conf->getParam('save');
     }
 
     /**
@@ -47,13 +59,17 @@ class RunAction extends AbstractAction
      * - print results
      */
     public function execute() {
-        $this->storage->open();
+        if ($this->save) {
+            $this->storage->open();
+        }
         foreach ($this->conf->getSizes() as $sizeName => $sizeConf) {
             $output = $this->conf->getOutputDir() . $sizeName;
             $loops = isset($sizeConf['loops']) ? $sizeConf['loops'] : 1;
             $this->executeSize($output, $loops);
         }
-        $this->storage->close();
+        if ($this->save) {
+            $this->storage->close();
+        }
     }
 
     /**
@@ -88,7 +104,9 @@ class RunAction extends AbstractAction
                 $result[$type] = $this->bench($type, $action, $path, $loops);
             }
             $this->printBenchInfo($action, $result);
-            $this->storage->save($path, $action, $loops, $result);
+            if ($this->save) {
+                $this->storage->save($path, $action, $loops, $result);
+            }
         }
     }
 

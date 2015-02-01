@@ -324,7 +324,8 @@ class Conf
     /**
      * Set parameter
      *
-     * @param array $params
+     * @param string $name
+     * @param mixed  $value
      *
      * @return Conf
      */
@@ -336,11 +337,12 @@ class Conf
     }
 
     /**
-     * Set parameter
+     * Get parameter
      *
-     * @param array $params
+     * @param string $name
+     * @param mixed  $default
      *
-     * @return Conf
+     * @return mixed
      */
     public function getParam($name, $default = null)
     {
