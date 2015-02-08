@@ -2,22 +2,34 @@
 
 ## PHP utils
 
-### Generator
-- Regenerate modified files
+### Conf
+- predefined white lists
 
-### Bench
-- process numbers and print summary results
+### Info
+- add new action for info about the tests
 
-### Checker
+### Check
 - show only failed checks
   - new option `--all` to show all tests
 - deep comparison for decoding
 - remove lengths when info is ready
 - valgrind support
 
-### Info
-- Info about the tests
+### Run
+- add options for setting base result for further comparison
+
+### View
+- difference in percent
+- twig support
+
+### Generator
+- regenerate modified files
+
+### Tests
+- add full unit tests coverage
 
 ### Console
-- Output all to the console output interface
-- Add progress bar for run and gen
+- add progress bar for run and gen
+
+### Docs
+- document everything
