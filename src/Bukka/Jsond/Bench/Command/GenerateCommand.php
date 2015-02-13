@@ -2,7 +2,6 @@
 
 namespace Bukka\Jsond\Bench\Command;
 
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -13,6 +12,16 @@ use Symfony\Component\Console\Output\OutputInterface;
 class GenerateCommand extends AbstractCommand
 {
     /**
+     * Whether the command has white list option
+     *
+     * @return bool
+     */
+    public function hasWhiteList()
+    {
+        return true;
+    }
+
+    /**
      * Configure command
      */
     protected function configure()
@@ -20,11 +29,6 @@ class GenerateCommand extends AbstractCommand
         $this
             ->setName('generate')
             ->setDescription('Generate the output instances')
-            ->addArgument(
-                'whiteList',
-                InputArgument::IS_ARRAY,
-                'White listed directories'
-            )
             ->addOption(
                'force',
                'f',
@@ -32,6 +36,8 @@ class GenerateCommand extends AbstractCommand
                'Whether to force generation'
             )
         ;
+
+        parent::configure();
     }
 
     /**
@@ -44,7 +50,6 @@ class GenerateCommand extends AbstractCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->conf->setWhiteList($input->getArgument('whiteList'));
         if ($input->getOption('force')) {
             $this->conf->enableForce();
         }
