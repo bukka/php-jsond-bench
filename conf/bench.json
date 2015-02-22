@@ -1,11 +1,23 @@
 {
-	"generator": "jsogen",
+    "generator": "jsogen",
     "storage": "file",
-	"sizes": {
-		"huge":   { "count": 1, "loops": 50 },
-		"big":    { "count": 3, "loops": 500 },
-		"medium": { "count": 3, "loops": 50000 },
-		"small":  { "count": 3, "loops": 100000 },
-		"tiny":   { "count": 3, "loops": 500000 }
-	}
+    "sizes": {
+        "huge":   { "count": 1, "loops": 50 },
+        "big":    { "count": 3, "loops": 500 },
+        "medium": { "count": 3, "loops": 50000 },
+        "small":  { "count": 3, "loops": 100000 },
+        "tiny":   { "count": 3, "loops": 500000 }
+    },
+    "white-lists": {
+        "str-basic": [
+            "tiny/string/array/basic_simple__1",
+            "small/string/array/basic_simple_repeat-low__1",
+            "medium/string/array/basic_simple_repeat-low__1"
+        ],
+        "str-utf8": [
+            "tiny/string/array/utf8_simple__1",
+            "small/string/array/utf8_simple_repeat-low__1",
+            "medium/string/array/utf8_simple_repeat-low__1"
+        ]
+    }
 }
