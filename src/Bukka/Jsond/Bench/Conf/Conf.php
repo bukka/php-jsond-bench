@@ -1,6 +1,8 @@
 <?php
 namespace Bukka\Jsond\Bench\Conf;
 
+use Bukka\Jsond\Bench\Exception\ConfException;
+
 /**
  * Config class
  */
@@ -142,13 +144,15 @@ class Conf
      * Get storage instance
      *
      * @return \Bukka\Jsond\Bench\Storage\StorageInterface
+     *
+     * @throws ConfException
      */
     public function getStorage() {
         if (!$this->storage) {
             $storageName = isset($this->conf['storage']) ? $this->conf['storage'] : self::DEFAULT_STORAGE;
             $storageClass = '\Bukka\Jsond\Bench\Storage\\' . ucfirst($storageName) . 'Storage';
             if (!class_exists($storageClass)) {
-                throw new \Exception('Invalid storage class ' . $storageClass);
+                throw new ConfException('Invalid storage class ' . $storageClass);
             }
             $this->storage = new $storageClass($this);
         }
@@ -212,10 +216,23 @@ class Conf
     /**
      * Set template directory
      *
+     * @param mixed $whiteList
+     *
      * @return Conf
+     *
+     * @throws ConfException
      */
     public function setWhiteList($whiteList) {
-        $this->whiteList = $whiteList;
+        if (is_array($whiteList)) {
+            $this->whiteList = $whiteList;
+        } elseif (!empty($whiteList)) {
+            // try predefined white lists
+            $whiteListName = (string) $whiteList;
+            if (!isset($this->conf['white-lists'][$whiteListName])) {
+                throw new ConfException("White list $whiteListName not found in config file");
+            }
+            $this->whiteList = $this->conf['white-lists'][$whiteListName];
+        }
 
         return $this;
     }
@@ -232,7 +249,7 @@ class Conf
     /**
      * Whether generating should be executed
      *
-     * @return booleam
+     * @return boolean
      */
     public function isGen() {
         return $this->action === 'gen';
@@ -241,7 +258,7 @@ class Conf
     /**
      * Whether generating should be executed
      *
-     * @return booleam
+     * @return boolean
      */
     public function isTest() {
         return $this->action === 'test';

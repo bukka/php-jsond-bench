@@ -2,9 +2,6 @@
 
 ## PHP utils
 
-### Conf
-- predefined white lists
-
 ### Info
 - add new action for info about the tests
 

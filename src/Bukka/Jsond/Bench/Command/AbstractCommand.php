@@ -8,6 +8,7 @@ use Bukka\Jsond\Bench\Writer\ConsoleWriter;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractCommand extends Command
@@ -48,9 +49,15 @@ abstract class AbstractCommand extends Command
     {
         if ($this->hasWhiteList()) {
             $this->addArgument(
-                'whiteList',
+                'whiteListDirs',
                 InputArgument::IS_ARRAY,
                 'White listed directories'
+            );
+            $this->addOption(
+                'whiteList',
+                'w',
+                InputOption::VALUE_REQUIRED,
+                'Predefined White list'
             );
         }
     }
@@ -71,7 +78,10 @@ abstract class AbstractCommand extends Command
         }
 
         if ($this->hasWhiteList()) {
-            $this->conf->setWhiteList($input->getArgument('whiteList'));
+            $whiteList = $input->hasOption('whiteList') && $input->getOption('whiteList') ?
+                $input->getOption('whiteList') :
+                $input->getArgument('whiteListDirs');
+            $this->conf->setWhiteList($whiteList);
         }
 
         $writer = new ConsoleWriter($output);
