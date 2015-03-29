@@ -22,7 +22,7 @@ class CheckAction extends AbstractAction
     /**
      * Test for size
      *
-     * @param string $output
+     * @param string $path
      */
     protected function executeSize($path) {
         if (is_dir($path)) {
