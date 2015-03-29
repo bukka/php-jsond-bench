@@ -93,8 +93,13 @@ class Conf
      * Constructor
      *
      * @param string $confFile
+     * @param string $templateDir
+     * @param string $outputDir
+     * @param string $benchDir
+     * @param string $storageDir
      */
-    public function __construct($confFile, $templateDir, $outputDir, $benchDir, $storageDir) {
+    public function __construct($confFile, $templateDir, $outputDir, $benchDir, $storageDir)
+    {
         $this->conf = json_decode(file_get_contents($confFile), true);
         $this->templateDir = $templateDir;
         $this->outputDir = $outputDir;
@@ -109,7 +114,8 @@ class Conf
      *
      * @return mixed
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         switch ($name) {
             case 'generator':
                 return $this->getGenerator();
@@ -136,7 +142,8 @@ class Conf
      *
      * @return string
      */
-    public function getGenerator() {
+    public function getGenerator()
+    {
         return isset($this->conf['generator']) ? $this->conf['generator'] : self::DEFAULT_GENERATOR;
     }
 
@@ -147,7 +154,8 @@ class Conf
      *
      * @throws ConfException
      */
-    public function getStorage() {
+    public function getStorage()
+    {
         if (!$this->storage) {
             $storageName = isset($this->conf['storage']) ? $this->conf['storage'] : self::DEFAULT_STORAGE;
             $storageClass = '\Bukka\Jsond\Bench\Storage\\' . ucfirst($storageName) . 'Storage';
@@ -164,7 +172,8 @@ class Conf
      *
      * @return string
      */
-    public function getStorageDir() {
+    public function getStorageDir()
+    {
         return $this->storageDir;
     }
 
@@ -173,7 +182,8 @@ class Conf
      *
      * @return string
      */
-    public function getOutputDir() {
+    public function getOutputDir()
+    {
         return $this->outputDir;
     }
 
@@ -182,7 +192,8 @@ class Conf
      *
      * @return string
      */
-    public function getBenchDir() {
+    public function getBenchDir()
+    {
         return $this->benchDir;
     }
 
@@ -191,7 +202,8 @@ class Conf
      *
      * @return array
      */
-    public function getSizes() {
+    public function getSizes()
+    {
         return isset($this->conf['sizes']) ? $this->conf['sizes'] : array();
     }
 
@@ -200,7 +212,8 @@ class Conf
      *
      * @return string
      */
-    public function getTemplateDir() {
+    public function getTemplateDir()
+    {
         return $this->templateDir;
     }
 
@@ -209,7 +222,8 @@ class Conf
      *
      * @return string
      */
-    public function getWhiteList() {
+    public function getWhiteList()
+    {
         return $this->whiteList;
     }
 
@@ -222,7 +236,8 @@ class Conf
      *
      * @throws ConfException
      */
-    public function setWhiteList($whiteList) {
+    public function setWhiteList($whiteList)
+    {
         if (is_array($whiteList)) {
             $this->whiteList = $whiteList;
         } elseif (!empty($whiteList)) {
@@ -242,7 +257,8 @@ class Conf
      *
      * @return boolean
      */
-    public function isBench() {
+    public function isBench()
+    {
         return $this->action === 'bench';
     }
 
@@ -251,7 +267,8 @@ class Conf
      *
      * @return boolean
      */
-    public function isGen() {
+    public function isGen()
+    {
         return $this->action === 'gen';
     }
 
@@ -260,7 +277,8 @@ class Conf
      *
      * @return boolean
      */
-    public function isTest() {
+    public function isTest()
+    {
         return $this->action === 'test';
     }
 
@@ -269,7 +287,8 @@ class Conf
      *
      * @return Conf
      */
-    public function disableForce() {
+    public function disableForce()
+    {
         $this->force = false;
 
         return $this;
@@ -280,7 +299,8 @@ class Conf
      *
      * @return Conf
      */
-    public function enableForce() {
+    public function enableForce()
+    {
         $this->force = true;
 
         return $this;
@@ -291,7 +311,8 @@ class Conf
      *
      * @return boolean
      */
-    public function isForce() {
+    public function isForce()
+    {
         return $this->force;
     }
 
@@ -303,7 +324,8 @@ class Conf
      *
      * @return boolean
      */
-    public function isWhiteListed($path, $isTemplate) {
+    public function isWhiteListed($path, $isTemplate)
+    {
         $whiteList = $this->getWhiteList();
         if (empty($whiteList)) {
             return true;

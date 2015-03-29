@@ -12,7 +12,8 @@ class CheckAction extends AbstractAction
     /**
      * Test templates
      */
-    public function execute() {
+    public function execute()
+    {
         foreach ($this->conf->getSizes() as $sizeName => $sizeConf) {
             $output = $this->conf->getOutputDir() . $sizeName;
             $this->executeSize($output);
@@ -24,7 +25,8 @@ class CheckAction extends AbstractAction
      *
      * @param string $path
      */
-    protected function executeSize($path) {
+    protected function executeSize($path)
+    {
         if (is_dir($path)) {
             foreach (new DirectorySortedIterator($path) as $fileInfo) {
                 $fname = $fileInfo->getFilename();
@@ -40,7 +42,8 @@ class CheckAction extends AbstractAction
      *
      * @param string $path
      */
-    protected function checkFile($path) {
+    protected function checkFile($path)
+    {
         $this->printf("FILE: %s\n", $path);
         $string = file_get_contents($path);
         $this->printf("LENGTH: %s\n", strlen($string));
@@ -78,11 +81,12 @@ class CheckAction extends AbstractAction
     /**
      * Check encoding
      *
-     * @param string $string
+     * @param string $object
      *
      * @return string
      */
-    protected function checkEncode($object) {
+    protected function checkEncode($object)
+    {
         $json = json_encode($object);
         $jsond = jsond_encode($object);
         if ($json === $jsond) {
@@ -108,7 +112,8 @@ class CheckAction extends AbstractAction
      *
      * @return array
      */
-    protected function findStringDifference($s1, $s2, $len = 10) {
+    protected function findStringDifference($s1, $s2, $len = 10)
+    {
         $count = min(strlen($s1), strlen($s2));
         for ($i = 0; $i < $count; $i++) {
             if ($s1[$i] !== $s2[$i]) {

@@ -14,7 +14,8 @@ class GenerateAction extends AbstractAction
      * Generate templates
      * - iterate conf sizes
      */
-    public function execute() {
+    public function execute()
+    {
         foreach ($this->conf->getSizes() as $sizeName => $sizeConf) {
             $input = $this->conf->getTemplateDir() . $sizeName;
             $output = $this->conf->getOutputDir() . $sizeName;
@@ -35,7 +36,8 @@ class GenerateAction extends AbstractAction
      *
      * @throws ActionException
      */
-    protected function executeSize($input, $output, $count, $seed) {
+    protected function executeSize($input, $output, $count, $seed)
+    {
         if (is_dir($input)) {
             if (!is_dir($output) && !mkdir($output)) {
                 throw new ActionException("Creating directory failed");
@@ -68,7 +70,8 @@ class GenerateAction extends AbstractAction
      *
      * @return array New paths
      */
-    protected function createPaths($output, $seed, $count) {
+    protected function createPaths($output, $seed, $count)
+    {
         if ($count < 1) {
             return array();
         }

@@ -43,7 +43,8 @@ class RunAction extends AbstractAction
      * @param Conf            $conf
      * @param WriterInterface $writer
      */
-    public function __construct(Conf $conf, WriterInterface $writer) {
+    public function __construct(Conf $conf, WriterInterface $writer)
+    {
         parent::__construct($conf, $writer);
         $this->storage = $conf->getStorage();
         $this->types = $conf->getRunTypes();
@@ -58,7 +59,8 @@ class RunAction extends AbstractAction
      * - measure time json_encode and jsond_encode
      * - print results
      */
-    public function execute() {
+    public function execute()
+    {
         if ($this->save) {
             $this->storage->open();
         }
@@ -78,7 +80,8 @@ class RunAction extends AbstractAction
      * @param string $path
      * @param int    $loops
      */
-    protected function executeSize($path, $loops) {
+    protected function executeSize($path, $loops)
+    {
         if (is_dir($path)) {
             foreach (new DirectorySortedIterator($path) as $fileInfo) {
                 $fname = $fileInfo->getFilename();
@@ -95,7 +98,8 @@ class RunAction extends AbstractAction
      * @param string $path
      * @param int $loops
      */
-    protected function benchFile($path, $loops) {
+    protected function benchFile($path, $loops)
+    {
         $this->writer->formatLine("FILE: %s", $path);
 
         foreach ($this->actions as $action) {
@@ -120,7 +124,8 @@ class RunAction extends AbstractAction
      *
      * @return float
      */
-    protected function bench($type, $action, $path, $loops) {
+    protected function bench($type, $action, $path, $loops)
+    {
         $bench = $this->conf->getBenchDir() . "$type/$action.php";
         $command = "php $bench $path $loops";
         $result = json_decode(exec($command));
@@ -134,7 +139,8 @@ class RunAction extends AbstractAction
      * @param string $action
      * @param array  $results
      */
-    protected function printBenchInfo($action, $results) {
+    protected function printBenchInfo($action, $results)
+    {
         $resultStrings = array();
         foreach ($results as $type => $result) {
             $resultStrings[] = sprintf("%s: %.6f", $type, $result);
