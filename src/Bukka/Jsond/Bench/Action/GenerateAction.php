@@ -2,6 +2,7 @@
 
 namespace Bukka\Jsond\Bench\Action;
 
+use Bukka\Jsond\Bench\Exception\ActionException;
 use Bukka\Jsond\Bench\Util\DirectorySortedIterator;
 
 /**
@@ -29,13 +30,15 @@ class GenerateAction extends AbstractAction
      *
      * @param string $input
      * @param string $output
-     * @param int    $count
-     * @param int    $seed
+     * @param int $count
+     * @param int $seed
+     *
+     * @throws ActionException
      */
     protected function executeSize($input, $output, $count, $seed) {
         if (is_dir($input)) {
             if (!is_dir($output) && !mkdir($output)) {
-                throw new Exception("Creating directory failed");
+                throw new ActionException("Creating directory failed");
             }
             foreach (new DirectorySortedIterator($input) as $fileInfo) {
                 $fname = $fileInfo->getFilename();
