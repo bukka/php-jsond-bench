@@ -100,7 +100,7 @@ class Conf
      */
     public function __construct($confFile, $templateDir, $outputDir, $benchDir, $storageDir)
     {
-        $this->conf = json_decode(file_get_contents($confFile), true);
+        $this->initConf($confFile);
         $this->templateDir = $templateDir;
         $this->outputDir = $outputDir;
         $this->benchDir = $benchDir;
@@ -135,6 +135,39 @@ class Conf
                 return $this->whiteList;
         }
         return null;
+    }
+
+    /**
+     * @param string $confFile
+     */
+    public function initConf($confFile)
+    {
+        $conf = json_decode(file_get_contents($confFile), true);
+
+        // init sizes
+        $defaultSizeSettings = array(
+            'seed'  => 1,
+            'count' => 1,
+            'loops' => 100,
+        );
+        if (isset($conf['sizes']) && is_array($conf['sizes'])) {
+            foreach ($conf['sizes'] as $sizeName => $sizeConf) {
+                $changed = false;
+                foreach ($defaultSizeSettings as $defaultSizeSettingName => $defaultSizeSettingValue) {
+                    if (!isset($sizeConf[$defaultSizeSettingName])) {
+                        $sizeConf[$defaultSizeSettingName] = $defaultSizeSettingValue;
+                        $changed = true;
+                    }
+                }
+                if ($changed) {
+                    $conf['sizes'][$sizeName] = $sizeConf;
+                }
+            }
+        } else {
+            $conf['sizes'] = array();
+        }
+
+        $this->conf = $conf;
     }
 
     /**
@@ -204,7 +237,7 @@ class Conf
      */
     public function getSizes()
     {
-        return isset($this->conf['sizes']) ? $this->conf['sizes'] : array();
+        return $this->conf['sizes'];
     }
 
     /**

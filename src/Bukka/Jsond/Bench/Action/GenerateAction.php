@@ -19,9 +19,7 @@ class GenerateAction extends AbstractAction
         foreach ($this->conf->getSizes() as $sizeName => $sizeConf) {
             $input = $this->conf->getTemplateDir() . $sizeName;
             $output = $this->conf->getOutputDir() . $sizeName;
-            $count = isset($sizeConf['count']) ? $sizeConf['count'] : 1;
-            $seed = isset($sizeConf['seed']) ? $sizeConf['seed'] : 1;
-            $this->executeSize($input, $output, $count, $seed);
+            $this->executeSize($input, $output, $sizeConf);
         }
     }
 
@@ -31,12 +29,11 @@ class GenerateAction extends AbstractAction
      *
      * @param string $input
      * @param string $output
-     * @param int $count
-     * @param int $seed
+     * @param array  $sizeConf
      *
      * @throws ActionException
      */
-    protected function executeSize($input, $output, $count, $seed)
+    protected function executeSize($input, $output, $sizeConf)
     {
         if (is_dir($input)) {
             if (!is_dir($output) && !mkdir($output)) {
@@ -44,13 +41,13 @@ class GenerateAction extends AbstractAction
             }
             foreach (new DirectorySortedIterator($input) as $fileInfo) {
                 $fname = $fileInfo->getFilename();
-                $this->executeSize("$input/$fname", "$output/$fname", $count, $seed);
+                $this->executeSize("$input/$fname", "$output/$fname", $sizeConf);
             }
         } elseif ($this->conf->isWhiteListed($input, true)) {
-            $filePaths = $this->createPaths($output, $seed, $count);
+            $filePaths = $this->createPaths($output, $sizeConf['seed'], $sizeConf['count']);
             if (!empty($filePaths)) {
-                $this->clearExistingPaths($filePaths, $output, $count);
-                $seedValue = $seed;
+                $this->clearExistingPaths($filePaths, $output, $sizeConf['count']);
+                $seedValue = $sizeConf['seed'];
                 foreach ($filePaths as $path) {
                     if (!file_exists($path)) {
                         $cmd = sprintf("%s %s -o %s -s %d", $this->conf->getGenerator(), $input, $path, $seedValue++);
