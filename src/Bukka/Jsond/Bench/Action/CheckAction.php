@@ -5,44 +5,17 @@ namespace Bukka\Jsond\Bench\Action;
 use Bukka\Jsond\Bench\Util\DirectorySortedIterator;
 
 /**
- * Templates checking class
+ * File checking class
  */
-class CheckAction extends AbstractAction
+class CheckAction extends AbstractFileAction
 {
     /**
-     * Test templates
-     */
-    public function execute()
-    {
-        foreach ($this->conf->getSizes() as $sizeName => $sizeConf) {
-            $output = $this->conf->getOutputDir() . $sizeName;
-            $this->executeSize($output);
-        }
-    }
-
-    /**
-     * Test for size
+     * Execute check of file instance
      *
      * @param string $path
+     * @param array  $sizeConf
      */
-    protected function executeSize($path)
-    {
-        if (is_dir($path)) {
-            foreach (new DirectorySortedIterator($path) as $fileInfo) {
-                $fname = $fileInfo->getFilename();
-                $this->executeSize("$path/$fname");
-            }
-        } elseif ($this->conf->isWhiteListed($path, false)) {
-            $this->checkFile($path);
-        }
-    }
-
-    /**
-     * Bench file instance
-     *
-     * @param string $path
-     */
-    protected function checkFile($path)
+    protected function executeFile($path, $sizeConf)
     {
         $this->printf("FILE: %s\n", $path);
         $string = file_get_contents($path);

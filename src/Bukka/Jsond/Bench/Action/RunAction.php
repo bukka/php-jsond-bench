@@ -9,7 +9,7 @@ use Bukka\Jsond\Bench\Writer\WriterInterface;
 /**
  * Benchmark run class
  */
-class RunAction extends AbstractAction
+class RunAction extends AbstractFileAction
 {
     /**
      * Storage
@@ -53,63 +53,43 @@ class RunAction extends AbstractAction
     }
 
     /**
-     * Run benchmark
-     * - walk output dir
-     * - measure time json_decode and jsond_decode
-     * - measure time json_encode and jsond_encode
-     * - print results
+     * Called before execution
      */
-    public function execute()
+    protected function preExecute()
     {
         if ($this->save) {
             $this->storage->open();
         }
-        foreach ($this->conf->getSizes() as $sizeName => $sizeConf) {
-            $output = $this->conf->getOutputDir() . $sizeName;
-            $loops = isset($sizeConf['loops']) ? $sizeConf['loops'] : 1;
-            $this->executeSize($output, $loops);
-        }
+    }
+
+    /**
+     * Called after execution
+     */
+    protected function postExecute()
+    {
         if ($this->save) {
             $this->storage->close();
         }
     }
 
     /**
-     * Run benchmark for size
+     * Execute benchmarking of file instance
      *
      * @param string $path
-     * @param int    $loops
+     * @param array  $sizeConf
      */
-    protected function executeSize($path, $loops)
-    {
-        if (is_dir($path)) {
-            foreach (new DirectorySortedIterator($path) as $fileInfo) {
-                $fname = $fileInfo->getFilename();
-                $this->executeSize("$path/$fname", $loops);
-            }
-        } elseif ($this->conf->isWhiteListed($path, false)) {
-            $this->benchFile($path, $loops);
-        }
-    }
-
-    /**
-     * Bench file instance
-     *
-     * @param string $path
-     * @param int $loops
-     */
-    protected function benchFile($path, $loops)
+    protected function executeFile($path, $sizeConf)
     {
         $this->writer->formatLine("FILE: %s", $path);
 
-        foreach ($this->actions as $action) {
+            foreach ($this->actions as $action) {
             $result = array();
             foreach ($this->types as $type) {
-                $result[$type] = $this->bench($type, $action, $path, $loops);
+                $result[$type] = $this->bench($type, $action, $path, $sizeConf['loops']);
             }
             $this->printBenchInfo($action, $result);
             if ($this->save) {
-                $this->storage->save($path, $action, $loops, $result);
+                $this->storage->save($path, $action, $sizeConf['loops'], $result);
             }
         }
     }
