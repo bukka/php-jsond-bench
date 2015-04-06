@@ -6,7 +6,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Bench command
+ * Check command
  */
 class CheckCommand extends AbstractCommand
 {
@@ -31,19 +31,5 @@ class CheckCommand extends AbstractCommand
         ;
 
         parent::configure();
-    }
-
-    /**
-     * Execute command
-     *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return null
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        // execute action
-        parent::execute($input, $output);
     }
 }
