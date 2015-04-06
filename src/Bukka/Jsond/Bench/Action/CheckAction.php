@@ -19,7 +19,6 @@ class CheckAction extends AbstractFileAction
     {
         $this->printf("FILE: %s\n", $path);
         $string = file_get_contents($path);
-        $this->printf("LENGTH: %s\n", strlen($string));
         // Decoding
         $decodeTestResult = $this->checkDecode($string);
         $this->printf("DECODING: %s\n", $decodeTestResult);

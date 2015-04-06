@@ -4,6 +4,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use Bukka\Jsond\Bench\Command\CheckCommand;
 use Bukka\Jsond\Bench\Command\GenerateCommand;
+use Bukka\Jsond\Bench\Command\InfoCommand;
 use Bukka\Jsond\Bench\Command\RunCommand;
 use Bukka\Jsond\Bench\Command\ViewCommand;
 use Bukka\Jsond\Bench\Conf\Conf;
@@ -23,10 +24,12 @@ $checkCommand = new CheckCommand($conf);
 $generateCommand = new GenerateCommand($conf);
 $runCommand = new RunCommand($conf);
 $viewCommand = new ViewCommand($conf);
+$infoCommand = new InfoCommand($conf);
 
 $application = new Application();
 $application->add($checkCommand);
 $application->add($generateCommand);
 $application->add($runCommand);
 $application->add($viewCommand);
+$application->add($infoCommand);
 $application->run();
