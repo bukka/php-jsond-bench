@@ -51,7 +51,7 @@ abstract class AbstractFileAction extends AbstractAction
                 $fileName = $fileInfo->getFilename();
                 $this->executeSize("$path/$fileName", $sizeConf);
             }
-        } elseif ($this->conf->isWhiteListed($path, false)) {
+        } elseif (is_file($path) && $this->conf->isWhiteListed($path, false)) {
             $this->executeFile($path, $sizeConf);
         }
     }

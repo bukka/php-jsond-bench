@@ -2,8 +2,6 @@
 
 namespace Bukka\Jsond\Bench\Action;
 
-use Bukka\Jsond\Bench\Util\DirectorySortedIterator;
-
 /**
  * File checking class
  */
@@ -17,14 +15,19 @@ class CheckAction extends AbstractFileAction
      */
     protected function executeFile($path, $sizeConf)
     {
-        $this->printf("FILE: %s\n", $path);
         $string = file_get_contents($path);
         // Decoding
         $decodeTestResult = $this->checkDecode($string);
-        $this->printf("DECODING: %s\n", $decodeTestResult);
         // Encoding
         $encodeTestResult = $this->checkEncode(json_decode($string));
-        $this->printf("ENCODING: %s\n\n", $encodeTestResult);
+
+        if ($this->conf->getParam('all') ||
+                $decodeTestResult !== 'SS' ||
+                $encodeTestResult !== 'SS') {
+            $this->printf("FILE: %s\n", $path);
+            $this->printf("DECODING: %s\n", $decodeTestResult);
+            $this->printf("ENCODING: %s\n\n", $encodeTestResult);
+        }
     }
 
     /**
@@ -36,6 +39,7 @@ class CheckAction extends AbstractFileAction
      */
     protected function checkDecode($string) {
         $json = json_decode($string);
+        if (function_exists('jsond_decode'))
         $jsond = jsond_decode($string);
         if (is_null($json) && is_null($jsond)) {
             return 'EE';

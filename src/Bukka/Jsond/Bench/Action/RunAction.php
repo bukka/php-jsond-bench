@@ -3,7 +3,6 @@
 namespace Bukka\Jsond\Bench\Action;
 
 use Bukka\Jsond\Bench\Conf\Conf;
-use Bukka\Jsond\Bench\Util\DirectorySortedIterator;
 use Bukka\Jsond\Bench\Writer\WriterInterface;
 
 /**
