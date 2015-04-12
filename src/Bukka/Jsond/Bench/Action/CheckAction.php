@@ -8,6 +8,11 @@ namespace Bukka\Jsond\Bench\Action;
 class CheckAction extends AbstractFileAction
 {
     /**
+     * Results delimiter
+     */
+    const RESULTS_DELIMITER = ' ; ';
+
+    /**
      * Execute check of file instance
      *
      * @param string $path
@@ -22,12 +27,53 @@ class CheckAction extends AbstractFileAction
         $encodeTestResult = $this->checkEncode(json_decode($string));
 
         if ($this->conf->getParam('all') ||
-                $decodeTestResult !== 'SS' ||
-                $encodeTestResult !== 'SS') {
-            $this->printf("FILE: %s\n", $path);
-            $this->printf("DECODING: %s\n", $decodeTestResult);
-            $this->printf("ENCODING: %s\n\n", $encodeTestResult);
+                !$this->isCheckingResultSuccess($decodeTestResult) ||
+                !$this->isCheckingResultSuccess($encodeTestResult)) {
+            $this->writeln("FILE: " . $path);
+            $this->writeln("DECODING: " . $decodeTestResult);
+            $this->writeln("ENCODING: " . $encodeTestResult);
+            $this->writeln();
         }
+    }
+
+    /**
+     * Get message for checking
+     *
+     * @param string $ext
+     *
+     * @return string
+     */
+    protected function getCheckingResult($ext)
+    {
+        $lastErrorFn = $ext . "_last_error";
+        $lastErrorCode = $lastErrorFn();
+        if (!$lastErrorCode) {
+
+            return $ext . ':S';
+        }
+        $lastErrorMsgFn = $lastErrorFn . '_msg';
+
+        return sprintf("%s:E[ %d, %s ]", $ext, $lastErrorCode, $lastErrorMsgFn());
+    }
+
+    /**
+     * Find out if the result is success
+     *
+     * @param string $resultString
+     *
+     * @return bool
+     */
+    protected function isCheckingResultSuccess($resultString)
+    {
+        $results = explode(self::RESULTS_DELIMITER, $resultString);
+        foreach ($results as $result) {
+            if (strpos($result, ':S') === false) {
+
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -36,22 +82,24 @@ class CheckAction extends AbstractFileAction
      * @param string $string
      *
      * @return string
+     *
+     * @todo deep comparison
      */
     protected function checkDecode($string) {
+        // check json decoding
         $json = json_decode($string);
-        if (function_exists('jsond_decode'))
+        $jsonResult = $this->getCheckingResult('json');
+
+        if (!function_exists('jsond_decode')) {
+
+            return $jsonResult;
+        }
+
+        // check jsond decoding
         $jsond = jsond_decode($string);
-        if (is_null($json) && is_null($jsond)) {
-            return 'EE';
-        }
-        if (is_null($json)) {
-            return 'ES';
-        }
-        if (is_null($jsond)) {
-            return 'SE';
-        }
-        // todo: deep comparison
-        return 'SS';
+        $jsondResult = $this->getCheckingResult('jsond');
+
+        return $jsonResult . self::RESULTS_DELIMITER . $jsondResult;
     }
 
     /**
@@ -63,20 +111,30 @@ class CheckAction extends AbstractFileAction
      */
     protected function checkEncode($object)
     {
+        // check json encoding
         $json = json_encode($object);
+        $jsonResult = $this->getCheckingResult('json');
+
+        if (!function_exists('jsond_encode')) {
+
+            return $jsonResult;
+        }
+
+        // check jsond encoding
         $jsond = jsond_encode($object);
-        if ($json === $jsond) {
-            return is_null($json) ? 'EE' : 'SS';
+        $jsondResult = $this->getCheckingResult('jsond');
+
+        if ($json === $jsond ||
+                !$this->isCheckingResultSuccess($jsonResult) ||
+                !$this->isCheckingResultSuccess($jsondResult)) {
+
+            return $jsonResult . self::RESULTS_DELIMITER . $jsondResult;
         }
-        if (is_null($json)) {
-            return 'ES';
-        }
-        if (is_null($jsond)) {
-            return 'SE';
-        }
+
         list($diffPos, $diffNear) = $this->findStringDifference($json, $jsond);
-        return sprintf('NN len(%d:%d), diff(%d,"%s")',
-                strlen($json), strlen($jsond), $diffPos, $diffNear);
+
+        return sprintf('json:N%sjsond:N --> len(%d:%d), diff(%d,"%s")',
+            self::RESULTS_DELIMITER, strlen($json), strlen($jsond), $diffPos, $diffNear);
     }
 
     /**
@@ -96,6 +154,7 @@ class CheckAction extends AbstractFileAction
                 break;
             }
         }
+
         return array($i, substr($s1, max(0, $i - $len), min($len, $i)));
     }
 }

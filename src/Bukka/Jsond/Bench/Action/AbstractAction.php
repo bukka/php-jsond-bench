@@ -41,7 +41,7 @@ abstract class AbstractAction
      *
      * @param string|array $messages The message as an array of lines or a single string
      */
-    protected function write($messages)
+    protected function write($messages = '')
     {
         $this->writer->write($messages);
     }
@@ -51,7 +51,7 @@ abstract class AbstractAction
      *
      * @param string|array $messages The message as an array of lines or a single string
      */
-    protected function writeln($messages)
+    protected function writeln($messages = '')
     {
         $this->writer->writeLine($messages);
     }
