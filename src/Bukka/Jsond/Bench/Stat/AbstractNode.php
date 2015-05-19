@@ -12,8 +12,8 @@ abstract class AbstractNode implements NodeInterface
      * It's formatted as
      *
      * array(
-     *      'json' => array($result1, $result2, $result2),
-     *      'jsond' => array($result1, $result2, $result2)
+     *      'json' => array($result1, $result2, $result3),
+     *      'jsond' => array($result1, $result2, $result3)
      * )
      *
      * or if it's a leaf node (Item) then
@@ -73,6 +73,16 @@ abstract class AbstractNode implements NodeInterface
             }
         }
         return $children;
+    }
+
+    /**
+     * Get all runs. It is useful probably just for unit tests
+     *
+     * @todo Replace with reflection maybe
+     */
+    public function getRuns()
+    {
+        return $this->runs;
     }
 
     /**

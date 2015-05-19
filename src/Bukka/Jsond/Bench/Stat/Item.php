@@ -44,16 +44,6 @@ class Item extends AbstractNode
     }
 
     /**
-     * Get levels
-     *
-     * @return mixed
-     */
-    public function getLevels()
-    {
-        return $this->levels;
-    }
-
-    /**
      * @param $loops
      */
     public function setLoops($loops)
@@ -141,7 +131,7 @@ class Item extends AbstractNode
     public function getRunCount($name = null)
     {
         if (is_null($name)) {
-            return array_fill_keys(array_keys($this->runs), 1);
+            return array_fill_keys($this->getRunNames($this->runs), 1);
         }
         if (isset($this->runs[$name])) {
             return 1;
@@ -161,7 +151,7 @@ class Item extends AbstractNode
     public function getLoops($name = null)
     {
         if (is_null($name)) {
-            return array_fill_keys(array_keys($this->runs), $this->loops);
+            return array_fill_keys($this->getRunNames($this->runs), $this->loops);
         }
         if (isset($this->runs[$name])) {
             return $this->loops;
