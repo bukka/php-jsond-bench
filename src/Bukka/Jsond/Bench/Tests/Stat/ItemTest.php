@@ -38,7 +38,7 @@ class ItemTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(2, $runs);
         $this->assertArrayHasKey("json", $runs);
         $this->assertArrayHasKey("json2", $runs);
-        $this->assertEquals(1.111111, $runs['json'], "Invalid value for json2 run", 0.0000001);
+        $this->assertEquals(1.111111, $runs['json2'], "Invalid value for json2 run", 0.0000001);
     }
 
     public function testAddRuns()
