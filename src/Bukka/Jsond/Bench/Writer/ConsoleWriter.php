@@ -4,6 +4,9 @@ namespace Bukka\Jsond\Bench\Writer;
 
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Console writer
+ */
 class ConsoleWriter extends AbstractWriter
 {
     /**

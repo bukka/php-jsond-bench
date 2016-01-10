@@ -4,6 +4,9 @@ namespace Bukka\Jsond\Bench\Stat;
 
 use Bukka\Jsond\Bench\Writer\WriterInterface;
 
+/**
+ * Node
+ */
 class Node extends AbstractNode
 {
     /**

@@ -7,7 +7,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Gen command
+ * Generate command for generating output files of templates
  */
 class GenerateCommand extends AbstractCommand
 {

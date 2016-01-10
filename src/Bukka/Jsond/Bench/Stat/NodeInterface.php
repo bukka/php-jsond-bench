@@ -2,6 +2,9 @@
 
 namespace Bukka\Jsond\Bench\Stat;
 
+/**
+ * Node interface
+ */
 interface NodeInterface
 {
     /**

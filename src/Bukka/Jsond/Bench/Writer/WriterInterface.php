@@ -2,6 +2,9 @@
 
 namespace Bukka\Jsond\Bench\Writer;
 
+/**
+ * Writer interface
+ */
 interface WriterInterface
 {
     /**

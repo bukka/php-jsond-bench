@@ -18,9 +18,9 @@ class RunAction extends AbstractFileAction
     protected $storage;
 
     /**
-     * Storage
+     * Types
      *
-     * @var \Bukka\Jsond\Bench\Storage\StorageInterface
+     * @var array
      */
     protected $types;
 
@@ -32,6 +32,8 @@ class RunAction extends AbstractFileAction
     protected $actions;
 
     /**
+     * Whether to save run info to storage
+     *
      * @var boolean
      */
     protected $save;

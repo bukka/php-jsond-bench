@@ -2,6 +2,9 @@
 
 namespace Bukka\Jsond\Bench\Stat;
 
+/**
+ * Item node
+ */
 class Item extends AbstractNode
 {
     /**
@@ -44,7 +47,9 @@ class Item extends AbstractNode
     }
 
     /**
-     * @param $loops
+     * Set loops
+     *
+     * @param integer $loops
      */
     public function setLoops($loops)
     {
@@ -52,6 +57,8 @@ class Item extends AbstractNode
     }
 
     /**
+     * Add a single run
+     *
      * @param string $name
      * @param string $value
      * @param array  $runAliases
@@ -65,7 +72,9 @@ class Item extends AbstractNode
     }
 
     /**
-     * @param $runs
+     * Add multiple runs
+     *
+     * @param array $runs
      * @param array $runAliases
      */
     public function addRuns($runs, array $runAliases = array())

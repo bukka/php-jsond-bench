@@ -15,6 +15,7 @@ abstract class AbstractStorage implements StorageInterface
     protected $conf;
 
     /**
+     * Constructor
      *
      * @param Conf $conf
      */

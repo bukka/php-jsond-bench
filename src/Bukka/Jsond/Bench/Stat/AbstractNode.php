@@ -4,6 +4,9 @@ namespace Bukka\Jsond\Bench\Stat;
 
 use Bukka\Jsond\Bench\Writer\WriterInterface;
 
+/**
+ * Abstract Node
+ */
 abstract class AbstractNode implements NodeInterface
 {
     /**
@@ -77,6 +80,8 @@ abstract class AbstractNode implements NodeInterface
 
     /**
      * Get all runs. It is useful probably just for unit tests
+     *
+     * @return array
      *
      * @todo Replace with reflection maybe
      */

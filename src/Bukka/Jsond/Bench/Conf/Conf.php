@@ -56,7 +56,7 @@ class Conf
     /**
      * Storage
      *
-     * @var\Bukka\Jsond\Bench\Storage\StorageInterface
+     * @var \Bukka\Jsond\Bench\Storage\StorageInterface
      */
     protected $storage = null;
 

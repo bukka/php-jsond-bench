@@ -3,7 +3,7 @@
 namespace Bukka\Jsond\Bench\Action;
 
 /**
- * File checking class
+ * File info class
  */
 class InfoAction extends AbstractFileAction
 {

@@ -36,7 +36,6 @@ class FileStorage extends AbstractStorage
         return $dirPath . "/" . self::RESULT_FILE_NAME;
     }
 
-
     /**
      * Get result path from date time
      *

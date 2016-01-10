@@ -3,7 +3,7 @@
 namespace Bukka\Jsond\Bench\Util;
 
 /**
- * Sorted iterator class
+ * Sorted directory iterator class
  */
 class DirectorySortedIterator implements \IteratorAggregate, \Countable
 {
@@ -15,7 +15,7 @@ class DirectorySortedIterator implements \IteratorAggregate, \Countable
     protected $dirs;
 
     /**
-     * Class contructor
+     * Class constructor
      *
      * @param mixed $directory Directory path
      */

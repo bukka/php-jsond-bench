@@ -2,6 +2,9 @@
 
 namespace Bukka\Jsond\Bench\Writer;
 
+/**
+ * Abstract writer
+ */
 abstract class AbstractWriter implements WriterInterface
 {
     /**
