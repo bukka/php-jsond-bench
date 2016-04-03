@@ -35,6 +35,12 @@ class RunCommand extends AbstractCommand
                 InputOption::VALUE_NONE,
                 'Whether the run results should be saved for the view'
             )
+            ->addOption(
+                'action',
+                'a',
+                InputOption::VALUE_REQUIRED,
+                'The only action that will be run'
+            )
         ;
 
         parent::configure();
@@ -51,6 +57,7 @@ class RunCommand extends AbstractCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->conf->setParam('save', $input->getOption('save'));
+        $this->conf->setRunAction($input->getOption('action'));
         // execute action
         parent::execute($input, $output);
     }

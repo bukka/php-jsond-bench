@@ -88,6 +88,13 @@ class Conf
      */
     protected $params = array();
 
+    /**
+     * Run actions
+     *
+     * @var array
+     */
+    protected $runActions = array('encode', 'decode');
+
 
     /**
      * Constructor
@@ -436,12 +443,33 @@ class Conf
     }
 
     /**
-     * Get run types
+     * Set run action
+     *
+     * @param string $action
+     * @throws ConfException
+     */
+    public function setRunAction($action)
+    {
+        if (!$action) {
+            return;
+        }
+
+        if (in_array($action, array('e', 'enc', 'encode'))) {
+            $this->runActions = array('encode');
+        } elseif (in_array($action, array('d', 'dec', 'decode'))) {
+            $this->runActions = array('decode');
+        } else {
+            throw new ConfException('Unknown action ' . $action);
+        }
+    }
+
+    /**
+     * Get run actions
      *
      * @return array
      */
     public function getRunActions()
     {
-        return array('encode', 'decode');
+        return $this->runActions;
     }
 }

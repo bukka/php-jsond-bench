@@ -83,7 +83,7 @@ class RunAction extends AbstractFileAction
     {
         $this->writer->formatLine("FILE: %s", $path);
 
-            foreach ($this->actions as $action) {
+        foreach ($this->actions as $action) {
             $result = array();
             foreach ($this->types as $type) {
                 $result[$type] = $this->bench($type, $action, $path, $sizeConf['loops']);
