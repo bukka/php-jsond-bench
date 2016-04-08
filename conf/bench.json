@@ -9,6 +9,17 @@
         "tiny":   { "count": 3, "loops": 500000 }
     },
     "white-lists": {
+        "mix-small": [
+            "small/float/array/small-p10_simple__1",
+            "small/float/arrobj/small-p05_shallow__1",
+            "small/float/object/small-p05_simple_repeat-low__1",
+            "small/int/array/small_simple__1",
+            "small/int/arrobj/small_shallow__1",
+            "small/int/object/small_simple_repeat-low__1",
+            "small/string/array/basic_simple_repeat-high__1",
+            "small/string/arrobj/basic_shallow_repeat-low__1",
+            "small/string/object/basic_simple_repeat-low__1"
+        ],
         "str-basic": [
             "tiny/string/array/basic_simple__1",
             "small/string/array/basic_simple_repeat-low__1",
