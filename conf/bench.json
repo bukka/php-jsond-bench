@@ -9,6 +9,17 @@
         "tiny":   { "count": 3, "loops": 500000 }
     },
     "white-lists": {
+        "mix-medium": [
+            "medium/float/array/small-p10_simple__1",
+            "medium/float/arrobj/big-p05_shallow__1",
+            "medium/float/object/small-p05_simple_repeat-low__1",
+            "medium/int/array/small_simple__1",
+            "medium/int/arrobj/small_shallow__1",
+            "medium/int/object/small_simple_repeat-low__1",
+            "medium/string/array/basic_simple_repeat-high__1",
+            "medium/string/arrobj/basic_shallow_repeat-low__1",
+            "medium/string/object/basic_simple_repeat-low__1"
+        ],
         "mix-small": [
             "small/float/array/small-p10_simple__1",
             "small/float/arrobj/small-p05_shallow__1",
