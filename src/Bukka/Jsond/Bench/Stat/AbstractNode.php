@@ -101,7 +101,7 @@ abstract class AbstractNode implements NodeInterface
         $writer->incLevel();
         $avgResults = $this->getAvgRunTime();
         foreach ($avgResults as $runName => $avgResult) {
-            $writer->formatLine("%-6s: %f", $runName, $avgResult);
+            $writer->formatLine("%-9s: %f", $runName, $avgResult);
         }
         $writer->writeLine();
         foreach ($this->getChildren() as $child) {
