@@ -1,16 +1,18 @@
 # Summary for the report 0002
 
+This report compares a new json parser method implementation. It is just PHP core json extension.
+
 ## Runs
 
 The runs for this report can be found [here](runs.md).
 
 ### Source Code
 
-The `function` is a current json implementation with the usual function calls. It can be seen at https://github.com/bukka/php-src/commit/ee551106bc11d6ac2eb277b810c9b8bb90e318bc
+The `function` is a current json implementation with the usual function calls. The commit that was benchmarked: https://github.com/bukka/php-src/commit/ee551106bc11d6ac2eb277b810c9b8bb90e318bc
 
-The `pointer` is a method based implementation with pointer to the method structure. It can be seen at https://github.com/bukka/php-src/commit/e6fb493e5dbafdad37ba5334c986636342b5d9aa
+The `pointer` is a method based implementation with pointer to the method structure. The commit that was benchmarked: https://github.com/bukka/php-src/commit/e6fb493e5dbafdad37ba5334c986636342b5d9aa
 
-The `embed` is a method based implementation with embedded (nested) method structure in `json_parser`. It can be seen at https://github.com/bukka/php-src/commit/e6fb493e5dbafdad37ba5334c986636342b5d9aa
+The `embed` is a method based implementation with embedded (nested) method structure in `json_parser`. The commit that was benchmarked: https://github.com/bukka/php-src/commit/e6fb493e5dbafdad37ba5334c986636342b5d9aa
 
 ### Description
 
@@ -28,10 +30,9 @@ The value for each run is an average of all values on the lower level. The lowes
 
 #### Correctness
 
-It's clear that pure average of the lower levels doesn't give complete information about the results and can be sometimes a bit misleading. 
+It's clear that pure average of the lower levels doesn't give a complete information about the results and can be sometimes misleading.
 
-However it gives quite clearly information about the result in general. It also is the first version of this tool so a complete statistical analysis is out of the scope at the moment. The improvements in this area are planned for the later stages of development.
-
+However it gives quite clearly an information about the result in general.
 
 ## Results
 
@@ -39,4 +40,4 @@ The results are just for decoding as encoding has not been changed.
 
 ### Decoding
 
-It is visible that `pointer` couses some slow down due to extra dereferencing. However `embed` causes no slow down compare to `function` and thus it is more suitable implementation.
+It is visible from the results that `pointer` couses some slow down due to extra dereferencing. However `embed` causes no slow down compare to `function` and thus it is more suitable implementation.

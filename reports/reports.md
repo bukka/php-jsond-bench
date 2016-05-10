@@ -4,6 +4,7 @@ Benchmark reports document performance changes for all templates runs. Each repo
 
 ## Listing
 
+* [0002](0002/summary.md) gives difference between json parser method implementations and the current json extension code.
 * [0001](0001/summary.md) gives difference between jsond based implementation for PHP 7 and the original json extension in PHP 7 commit.
  
  
